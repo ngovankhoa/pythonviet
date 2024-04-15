@@ -19786,7 +19786,7 @@ invalid_arguments_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_arguments[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "((','.(starred_expression | (assignment_expression | expression !':=') !'=')+ ',' kwargs) | kwargs) ',' ','.(starred_expression !'=')+"));
-            _res = RAISE_SYNTAX_ERROR_STARTING_FROM ( a , "iterable argument unpacking follows keyword argument unpacking (%s)" , "Mở gói tham số có thể duyệt theo sau mở gói tham số từ khóa" );
+            _res = RAISE_SYNTAX_ERROR_STARTING_FROM ( a , "iterable argument unpacking follows keyword argument unpacking - %s" , "Mở gói tham số có thể duyệt theo sau mở gói tham số từ khóa" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -19820,7 +19820,7 @@ invalid_arguments_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_arguments[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "expression for_if_clauses ',' [args | expression for_if_clauses]"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , _PyPegen_get_last_comprehension_item ( PyPegen_last_item ( b , comprehension_ty ) ) , "Generator expression must be parenthesized (%s)" , "Biểu thức sinh cần phải có dấu ngoặc đơn" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , _PyPegen_get_last_comprehension_item ( PyPegen_last_item ( b , comprehension_ty ) ) , "Generator expression must be parenthesized - %s" , "Biểu thức sinh cần phải có dấu ngoặc đơn" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -19853,7 +19853,7 @@ invalid_arguments_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_arguments[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "NAME '=' expression for_if_clauses"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "invalid syntax. Maybe you meant '==' or ':=' instead of '='? (%s)" , "Sai cú pháp. Có phải bạn muốn dấu '==' hoặc dấu ':=' chứ không phải dấu '='?" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "invalid syntax. Maybe you meant '==' or ':=' instead of '='? - %s" , "Sai cú pháp. Có phải bạn muốn dấu '==' hoặc dấu ':=' chứ không phải dấu '='?" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -19886,7 +19886,7 @@ invalid_arguments_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_arguments[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "[(args ',')] NAME '=' &(',' | ')')"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "expected argument value expression (%s)" , "thiếu biểu thức giá trị của tham số" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "expected argument value expression - %s" , "Thiếu biểu thức giá trị của tham số" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -19946,7 +19946,7 @@ invalid_arguments_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_arguments[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "args ',' expression for_if_clauses"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , _PyPegen_get_last_comprehension_item ( PyPegen_last_item ( b , comprehension_ty ) ) , "Generator expression must be parenthesized (%s)" , "Biểu thức sinh cần phải có dấu ngoặc đơn" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , _PyPegen_get_last_comprehension_item ( PyPegen_last_item ( b , comprehension_ty ) ) , "Generator expression must be parenthesized - %s" , "Biểu thức sinh cần phải có dấu ngoặc đơn" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20059,7 +20059,7 @@ invalid_kwarg_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_kwarg[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "NAME '=' expression for_if_clauses"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "invalid syntax. Maybe you meant '==' or ':=' instead of '='? (%s)" , "Sai cú pháp. Có phải bạn muốn dấu '==' hoặc dấu ':=' chứ không phải dấu '='?" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "invalid syntax. Maybe you meant '==' or ':=' instead of '='? - %s" , "Sai cú pháp. Có phải bạn muốn dấu '==' hoặc dấu ':=' chứ không phải dấu '='?" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20088,7 +20088,7 @@ invalid_kwarg_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_kwarg[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "!(NAME '=') expression '='"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "expression cannot contain assignment, perhaps you meant \"==\"? (%s)" , "biểu thức không thể chứa phép gán, có phải bạn muốn dấu so sánh '=='?" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "expression cannot contain assignment, perhaps you meant \"==\"? - %s" , "Biểu thức không thể chứa phép gán, có phải bạn muốn dấu so sánh '=='?" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20121,7 +20121,7 @@ invalid_kwarg_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_kwarg[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'**' expression '=' expression"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "cannot assign to keyword argument unpacking (%s)" , "không thể gán cho mở gói tham số từ khóa" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "cannot assign to keyword argument unpacking - %s" , "Không thể gán cho mở gói tham số từ khóa" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20293,7 +20293,7 @@ invalid_legacy_expression_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_legacy_expression[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "NAME !'(' star_expressions"));
-            _res = _PyPegen_check_legacy_stmt ( p , a ) ? RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "Missing parentheses in call to '%U'. Did you mean %U(...)?" , a -> v . Name . id , a -> v . Name . id ) : NULL;
+            _res = _PyPegen_check_legacy_stmt ( p , a ) ? RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "Missing parentheses in call to '%U'. Did you mean %U(...)? - %s %U(...)?" , a -> v . Name . id , a -> v . Name . id , "Thiếu dấu mở đóng ngoặc đơn. Có phải ý bạn là" , a -> v . Name . id ) : NULL;
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20344,7 +20344,7 @@ invalid_expression_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_expression[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "!(NAME STRING | SOFT_KEYWORD) disjunction expression_without_invalid"));
-            _res = _PyPegen_check_legacy_stmt ( p , a ) ? NULL : p -> tokens [p -> mark - 1] -> level == 0 ? NULL : RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "%s" , "sai cú pháp. Có phải bạn đã quên dấu phảy?" );
+            _res = _PyPegen_check_legacy_stmt ( p , a ) ? NULL : p -> tokens [p -> mark - 1] -> level == 0 ? NULL : RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "invalid syntax. Perhaps you forgot a comma? - %s" , "Sai cú pháp. Có phải bạn đã quên dấu phảy?" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20376,7 +20376,7 @@ invalid_expression_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_expression[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "disjunction 'if' disjunction !('else' | ':')"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "expected 'else' after 'if' expression" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "expected 'else' after 'if' expression - %s" , "Cần lệnh 'else' sau biểu thức 'if'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20409,7 +20409,7 @@ invalid_expression_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_expression[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'lambda' lambda_params? ':' &FSTRING_MIDDLE"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "f-string: lambda expressions are not allowed without parentheses" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "f-string: lambda expressions are not allowed without parentheses - %s" , "Biểu thức lambda không được thiếu dấu mở đóng ngoặc đơn" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
