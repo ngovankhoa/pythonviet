@@ -1130,27 +1130,27 @@ func_type_comment[Token*]:
 # From here on, there are rules for invalid syntax with specialised error messages
 invalid_arguments:
     | ((','.(starred_expression | ( assignment_expression | expression !':=') !'=')+ ',' kwargs) | kwargs) a=',' ','.(starred_expression !'=')+ {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "iterable argument unpacking follows keyword argument unpacking") }
+        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "iterable argument unpacking follows keyword argument unpacking (%s)", "Mở gói tham số có thể duyệt theo sau mở gói tham số từ khóa") }
     | a=expression b=for_if_clauses ',' [args | expression for_if_clauses] {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, _PyPegen_get_last_comprehension_item(PyPegen_last_item(b, comprehension_ty)), "Generator expression must be parenthesized") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, _PyPegen_get_last_comprehension_item(PyPegen_last_item(b, comprehension_ty)), "Generator expression must be parenthesized (%s)", "Biểu thức sinh cần phải có dấu ngoặc đơn") }
     | a=NAME b='=' expression for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Maybe you meant '==' or ':=' instead of '='?")}
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Maybe you meant '==' or ':=' instead of '='? (%s)", "Sai cú pháp. Có phải bạn muốn dấu '==' hoặc dấu ':=' chứ không phải dấu '='?")}
     | (args ',')? a=NAME b='=' &(',' | ')') {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "expected argument value expression")}
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "expected argument value expression (%s)", "thiếu biểu thức giá trị của tham số")}
     | a=args b=for_if_clauses { _PyPegen_nonparen_genexp_in_call(p, a, b) }
     | args ',' a=expression b=for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, _PyPegen_get_last_comprehension_item(PyPegen_last_item(b, comprehension_ty)), "Generator expression must be parenthesized") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, _PyPegen_get_last_comprehension_item(PyPegen_last_item(b, comprehension_ty)), "Generator expression must be parenthesized (%s)", "Biểu thức sinh cần phải có dấu ngoặc đơn") }
     | a=args ',' args { _PyPegen_arguments_parsing_error(p, a) }
 invalid_kwarg:
     | a[Token*]=('True'|'False'|'None') b='=' {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot assign to %s", PyBytes_AS_STRING(a->bytes)) }
     | a=NAME b='=' expression for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Maybe you meant '==' or ':=' instead of '='?")}
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Maybe you meant '==' or ':=' instead of '='? (%s)", "Sai cú pháp. Có phải bạn muốn dấu '==' hoặc dấu ':=' chứ không phải dấu '='?")}
     | !(NAME '=') a=expression b='=' {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(
-            a, b, "expression cannot contain assignment, perhaps you meant \"==\"?") }
+            a, b, "expression cannot contain assignment, perhaps you meant \"==\"? (%s)", "biểu thức không thể chứa phép gán, có phải bạn muốn dấu so sánh '=='?") }
     | a='**' expression '=' b=expression {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot assign to keyword argument unpacking") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "cannot assign to keyword argument unpacking (%s)", "không thể gán cho mở gói tham số từ khóa") }
 
 # IMPORTANT: Note that the "_without_invalid" suffix causes the rule to not call invalid rules under it
 expression_without_invalid[expr_ty]:
@@ -1167,7 +1167,7 @@ invalid_expression:
     # Soft keywords need to also be ignored because they can be parsed as NAME NAME
    | !(NAME STRING | SOFT_KEYWORD) a=disjunction b=expression_without_invalid {
         _PyPegen_check_legacy_stmt(p, a) ? NULL : p->tokens[p->mark-1]->level == 0 ? NULL :
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Perhaps you forgot a comma?") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "%s", "sai cú pháp. Có phải bạn đã quên dấu phảy?") }
    | a=disjunction 'if' b=disjunction !('else'|':') { RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "expected 'else' after 'if' expression") }
    | a='lambda' [lambda_params] b=':' &FSTRING_MIDDLE  {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "f-string: lambda expressions are not allowed without parentheses") }
