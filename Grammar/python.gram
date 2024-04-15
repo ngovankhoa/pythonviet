@@ -1175,12 +1175,12 @@ invalid_expression:
 invalid_named_expression(memo):
     | a=expression ':=' expression {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
-            a, "cannot use assignment expressions with %s", _PyPegen_get_expr_name(a)) }
+            a, "cannot use assignment expressions with %s - %s %s", _PyPegen_get_expr_name(a), "Không thể dùng biểu thức gán với", _PyPegen_get_expr_name(a)) }
     | a=NAME '=' b=bitwise_or !('='|':=') {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Maybe you meant '==' or ':=' instead of '='?") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "invalid syntax. Maybe you meant '==' or ':=' instead of '='? - %s", "Sai cú pháp. Có phải bạn muốn dấu '==' hoặc dấu ':=' chứ không phải dấu '='?") }
     | !(list|tuple|genexp|'True'|'None'|'False') a=bitwise_or b='=' bitwise_or !('='|':=') {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot assign to %s here. Maybe you meant '==' instead of '='?",
-                                          _PyPegen_get_expr_name(a)) }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot assign to %s here. Maybe you meant '==' instead of '='? - %s",
+                                          _PyPegen_get_expr_name(a), "Không thể gán ở đây. Có phải bạn muốn dùng dấu '==' chứ không phải dấu '='?") }
 
 invalid_assignment:
     | a=invalid_ann_assign_target ':' expression {
