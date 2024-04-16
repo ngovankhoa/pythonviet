@@ -1228,7 +1228,7 @@ invalid_parameters:
     | (slash_no_default | slash_with_default) param_maybe_default* a='/' {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ may appear only once - %s", "/ có thể chỉ xuất hiện một lần") }
     | slash_no_default? param_no_default* invalid_parameters_helper a=param_no_default {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default - %", "Tham số với giá trị mặc định phải đứng sau tham số không có giá trị mặc định") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default - %s", "Tham số có giá trị mặc định phải đứng sau tham số không có giá trị mặc định") }
     | param_no_default* a='(' param_no_default+ ','? b=')' {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "Function parameters cannot be parenthesized - %s", "Các tham số của hàm không thể nằm trong dấu ngoặc đơn") }
     | (slash_no_default | slash_with_default)? param_maybe_default* '*' (',' | param_no_default) param_maybe_default* a='/' {
@@ -1252,11 +1252,11 @@ invalid_parameters_helper: # This is only there to avoid type errors
     | param_with_default+
 invalid_lambda_parameters:
     | a="/" ',' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "at least one argument must precede /") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "at least one argument must precede / - %s", "Phải có ít nhất một tham số đứng trước /") }
     | (lambda_slash_no_default | lambda_slash_with_default) lambda_param_maybe_default* a='/' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ may appear only once") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ may appear only once - %s", "/ chỉ có thể xuất hiện một lần") }
     | lambda_slash_no_default? lambda_param_no_default* invalid_lambda_parameters_helper a=lambda_param_no_default {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default - %s", "Tham số có giá trị mặc định phải đứng sau tham số không có giá trị mặc định") }
     | lambda_param_no_default* a='(' ','.lambda_param+ ','? b=')' {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "Lambda expression parameters cannot be parenthesized") }
     | (lambda_slash_no_default | lambda_slash_with_default)? lambda_param_maybe_default* '*' (',' | lambda_param_no_default) lambda_param_maybe_default* a='/' {
