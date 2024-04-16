@@ -1396,17 +1396,17 @@ invalid_replacement_field:
     | '{' a='}' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "f-string: valid expression required before '}' - %s", "Cần biểu thức hợp lệ trước dấu '}'") }
     | '{' !(yield_expr | star_expressions) { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting a valid expression after '{' - %s", "Cần biểu thức hợp lệ sau dấu '{'")}
     | '{' (yield_expr | star_expressions) !('=' | '!' | ':' | '}') {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '=', or '!', or ':', or '}'") }
+        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '=', or '!', or ':', or '}' - %s", "Cần phải có dấu '=', dấu '!', dấu ':' hoặc dấu '}'") }
     | '{' (yield_expr | star_expressions) '=' !('!' | ':' | '}') {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '!', or ':', or '}'") }
+        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '!', or ':', or '}' - %s", "Cần phải có dấu '!', dấu ':' hoặc dấu '}'") }
     | '{' (yield_expr | star_expressions) '='? invalid_conversion_character
     | '{' (yield_expr | star_expressions) '='? ['!' NAME] !(':' | '}') {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting ':' or '}'") }
+        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting ':' or '}' - %s", "Cần phải có dấu ':' hoặc dấu '}'") }
     | '{' (yield_expr | star_expressions) '='? ['!' NAME] ':' fstring_format_spec* !'}' {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '}', or format specs") }
+        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '}', or format specs - %s", "Cần phải có dấu '}' hoặc các định dạng") }
     | '{' (yield_expr | star_expressions) '='? ['!' NAME] !'}' {
-        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '}'") }
+        PyErr_Occurred() ? NULL : RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: expecting '}' - %s", "Cần phải có dấu '}'") }
 
 invalid_conversion_character:
-    | '!' &(':' | '}') { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: missing conversion character") }
-    | '!' !NAME { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: invalid conversion character") }
+    | '!' &(':' | '}') { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: missing conversion character - %s", "Thiếu ký tự chuyển đổi") }
+    | '!' !NAME { RAISE_SYNTAX_ERROR_ON_NEXT_TOKEN("f-string: invalid conversion character - %s", "Ký tự chuyển đổi không hợp lệ") }
