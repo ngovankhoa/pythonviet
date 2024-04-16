@@ -23301,7 +23301,7 @@ invalid_except_star_stmt_indent_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_star_stmt_indent[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' '*' expression ['as' NAME] ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'except*' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'except*' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'except*' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23352,7 +23352,7 @@ invalid_match_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_match_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "\"match\" subject_expr NEWLINE"));
-            _res = CHECK_VERSION ( void* , 10 , "Pattern matching is" , RAISE_SYNTAX_ERROR ( "expected ':'" ) );
+            _res = CHECK_VERSION ( void* , 10 , "Pattern matching is" , RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" ) );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23387,7 +23387,7 @@ invalid_match_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_match_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "\"match\" subject_expr ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'match' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'match' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'match' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23481,7 +23481,7 @@ invalid_case_block_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_case_block[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "\"case\" patterns guard? ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'case' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'case' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'case' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
