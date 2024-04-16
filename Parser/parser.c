@@ -20587,7 +20587,7 @@ invalid_assignment_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_assignment[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "invalid_ann_assign_target ':' expression"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "only single target (not %s) can be annotated" , _PyPegen_get_expr_name ( a ) );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "only single target (not %s) can be annotated - %s %s" , _PyPegen_get_expr_name ( a ) , "Chỉ có thể khai báo kiểu cho một thành phần, không thể áp dụng cho nguyên cả" , _PyPegen_get_expr_name ( a ) );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20623,7 +20623,7 @@ invalid_assignment_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_assignment[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "star_named_expression ',' star_named_expressions* ':' expression"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "only single target (not tuple) can be annotated" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "only single target (not tuple) can be annotated - %s" , "Chỉ có thể khai báo kiểu cho một thành phần, không thể áp dụng cho nguyên cả tuple" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20653,7 +20653,7 @@ invalid_assignment_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_assignment[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "expression ':' expression"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "illegal target for annotation" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "illegal target for annotation - %s" , "Thành phần không thể được khai báo kiểu" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20713,7 +20713,7 @@ invalid_assignment_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_assignment[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "((star_targets '='))* yield_expr '='"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "assignment to yield expression not possible" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "assignment to yield expression not possible - %s" , "Không thể gán cho biểu thức yield" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20743,7 +20743,7 @@ invalid_assignment_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_assignment[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "star_expressions augassign (yield_expr | star_expressions)"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "'%s' is an illegal expression for augmented assignment" , _PyPegen_get_expr_name ( a ) );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "'%s' is an illegal expression for augmented assignment - '%s' %s" , _PyPegen_get_expr_name ( a ) , _PyPegen_get_expr_name ( a ) , "là biểu thức không hợp lệ cho lệnh gán kết hợp" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;

@@ -1186,21 +1186,21 @@ invalid_assignment:
     | a=invalid_ann_assign_target ':' expression {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
             a,
-            "only single target (not %s) can be annotated",
-            _PyPegen_get_expr_name(a)
+            "only single target (not %s) can be annotated - %s %s",
+            _PyPegen_get_expr_name(a), "Chỉ có thể khai báo kiểu cho một thành phần, không thể áp dụng cho nguyên cả", _PyPegen_get_expr_name(a)
         )}
     | a=star_named_expression ',' star_named_expressions* ':' expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "only single target (not tuple) can be annotated") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "only single target (not tuple) can be annotated - %s", "Chỉ có thể khai báo kiểu cho một thành phần, không thể áp dụng cho nguyên cả tuple") }
     | a=expression ':' expression {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "illegal target for annotation") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "illegal target for annotation - %s", "Thành phần không thể được khai báo kiểu") }
     | (star_targets '=')* a=star_expressions '=' {
         RAISE_SYNTAX_ERROR_INVALID_TARGET(STAR_TARGETS, a) }
-    | (star_targets '=')* a=yield_expr '=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "assignment to yield expression not possible") }
+    | (star_targets '=')* a=yield_expr '=' { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "assignment to yield expression not possible - %s", "Không thể gán cho biểu thức yield") }
     | a=star_expressions augassign (yield_expr | star_expressions) {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
             a,
-            "'%s' is an illegal expression for augmented assignment",
-            _PyPegen_get_expr_name(a)
+            "'%s' is an illegal expression for augmented assignment - '%s' %s",
+            _PyPegen_get_expr_name(a), _PyPegen_get_expr_name(a), "là biểu thức không hợp lệ cho lệnh gán kết hợp"
         )}
 invalid_ann_assign_target[expr_ty]:
     | list
