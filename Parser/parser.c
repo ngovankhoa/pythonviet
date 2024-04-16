@@ -22810,7 +22810,7 @@ invalid_try_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_try_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'try' ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'try' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'try' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'try' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -22842,7 +22842,7 @@ invalid_try_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_try_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'try' ':' block !('except' | 'finally')"));
-            _res = RAISE_SYNTAX_ERROR ( "expected 'except' or 'finally' block" );
+            _res = RAISE_SYNTAX_ERROR ( "expected 'except' or 'finally' block - %s" , "Cần phải có khối lệnh 'except' hoặc 'finally'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -22891,7 +22891,7 @@ invalid_try_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_try_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'try' ':' block* except_block+ 'except' '*' expression ['as' NAME] ':'"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "cannot have both 'except' and 'except*' on the same 'try'" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "cannot have both 'except' and 'except*' on the same 'try' - %s" , "Không thể vừa có 'except' lại có cả 'except*' với cùng một lệnh 'try'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -22934,7 +22934,7 @@ invalid_try_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_try_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'try' ':' block* except_star_block+ 'except' [expression ['as' NAME]] ':'"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "cannot have both 'except' and 'except*' on the same 'try'" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "cannot have both 'except' and 'except*' on the same 'try' - %s" , "Không thể vừa có 'except' lại có cả 'except*' với cùng một lệnh 'try'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
