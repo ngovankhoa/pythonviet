@@ -23001,7 +23001,7 @@ invalid_except_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' '*'? expression ',' expressions ['as' NAME] ':'"));
-            _res = RAISE_SYNTAX_ERROR_STARTING_FROM ( a , "multiple exception types must be parenthesized - %s" , "Nhiê`u kiểu exception phải được đặt trong ngoặc đơn" );
+            _res = RAISE_SYNTAX_ERROR_STARTING_FROM ( a , "multiple exception types must be parenthesized - %s" , "Nhi\xe1\xbb\x81u kiểu exception phải được đặt trong ngoặc đơn" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23096,7 +23096,7 @@ invalid_except_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' '*' (NEWLINE | ':')"));
-            _res = RAISE_SYNTAX_ERROR ( "expected one or more exception types - %s" , "Cần phải có một hoặc nhiê`u kiểu exception" );
+            _res = RAISE_SYNTAX_ERROR ( "expected one or more exception types - %s" , "Cần phải có một hoặc nhi\xe1\xbb\x81u kiểu exception" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23530,7 +23530,7 @@ invalid_as_pattern_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_as_pattern[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "or_pattern 'as' \"_\""));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "cannot use '_' as a target" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "cannot use '_' as a target - %s" , "Không thể dùng '_'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23562,7 +23562,7 @@ invalid_as_pattern_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_as_pattern[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "or_pattern 'as' !NAME expression"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "invalid pattern target" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "invalid pattern target - %s" , "\xc4\x90\xc3\xad\x63\x68 mẫu không hợp lệ" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
