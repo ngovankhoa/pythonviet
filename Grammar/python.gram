@@ -1277,7 +1277,7 @@ invalid_lambda_kwds:
     | '**' lambda_param ',' a[Token*]=('*'|'**'|'/') { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "arguments cannot follow var-keyword argument - %s", "Các tham số không thể đứng sau tham số var-keyword") }
 invalid_double_type_comments:
     | TYPE_COMMENT NEWLINE TYPE_COMMENT NEWLINE INDENT {
-        RAISE_SYNTAX_ERROR("Cannot have two type comments on def") }
+        RAISE_SYNTAX_ERROR("Cannot have two type comments on def - %s", "Không thể có hai chú thích kiểu với def") }
 invalid_with_item:
     | expression 'as' a=expression &(',' | ')' | ':') {
         RAISE_SYNTAX_ERROR_INVALID_TARGET(STAR_TARGETS, a) }
@@ -1288,25 +1288,25 @@ invalid_for_target:
 
 invalid_group:
     | '(' a=starred_expression ')' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use starred expression here") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use starred expression here - %s", "Không thể dùng biểu thức dấu sao ở đây") }
     | '(' a='**' expression ')' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use double starred expression here") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "cannot use double starred expression here - %s", "Không thể dùng biểu thức hai dấu sao ở đây") }
 invalid_import:
     | a='import' ','.dotted_name+ 'from' dotted_name {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "Did you mean to use 'from ... import ...' instead?") }
+        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "Did you mean to use 'from ... import ...' instead? - %s", "Có phải bạn muốn dùng 'from ... import ...'?") }
 
 invalid_import_from_targets:
     | import_from_as_names ',' NEWLINE {
-        RAISE_SYNTAX_ERROR("trailing comma not allowed without surrounding parentheses") }
+        RAISE_SYNTAX_ERROR("trailing comma not allowed without surrounding parentheses - %s", "Dấu phảy đuôi không được phép dùng nếu không có dấu ngoặc đơn bao quanh") }
 
 invalid_with_stmt:
-    | [ASYNC] 'with' ','.(expression ['as' star_target])+ NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
-    | [ASYNC] 'with' '(' ','.(expressions ['as' star_target])+ ','? ')' NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
+    | [ASYNC] 'with' ','.(expression ['as' star_target])+ NEWLINE { RAISE_SYNTAX_ERROR("expected ':' - %s", "Cần phải có dấu ':'") }
+    | [ASYNC] 'with' '(' ','.(expressions ['as' star_target])+ ','? ')' NEWLINE { RAISE_SYNTAX_ERROR("expected ':' - %s", "Cần phải có dấu ':'") }
 invalid_with_stmt_indent:
     | [ASYNC] a='with' ','.(expression ['as' star_target])+ ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'with' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after 'with' statement on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau câu lệnh 'with' tại dòng", a->lineno) }
     | [ASYNC] a='with' '(' ','.(expressions ['as' star_target])+ ','? ')' ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'with' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after 'with' statement on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau câu lệnh 'with' tại dòng", a->lineno) }
 
 invalid_try_stmt:
     | a='try' ':' NEWLINE !INDENT {
