@@ -437,7 +437,7 @@ _Pypegen_set_syntax_error(Parser* p, Token* last_token) {
     // incorrect locations for generic syntax errors just because we reached
     // further away when trying to find specific syntax errors in the second
     // pass.
-    RAISE_SYNTAX_ERROR_KNOWN_LOCATION(last_token, "invalid syntax");
+    RAISE_SYNTAX_ERROR_KNOWN_LOCATION(last_token, "invalid syntax - %s", "Sai cú pháp");
     // _PyPegen_tokenize_full_source_to_check_for_errors will override the existing
     // generic SyntaxError we just raised if errors are found.
     _PyPegen_tokenize_full_source_to_check_for_errors(p);
