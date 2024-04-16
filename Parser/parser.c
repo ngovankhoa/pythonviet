@@ -20921,7 +20921,7 @@ invalid_block_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_block[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block" );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block - %s" , "Cần phải thụt đầu dòng" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -20973,7 +20973,7 @@ invalid_comprehension_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_comprehension[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "('[' | '(' | '{') starred_expression for_if_clauses"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "iterable unpacking cannot be used in comprehension" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "iterable unpacking cannot be used in comprehension - %s" , "Mở gói đối tượng có thể lặp không thể dùng với bao quát" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -21009,7 +21009,7 @@ invalid_comprehension_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_comprehension[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "('[' | '{') star_named_expression ',' star_named_expressions for_if_clauses"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , PyPegen_last_item ( b , expr_ty ) , "did you forget parentheses around the comprehension target?" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , PyPegen_last_item ( b , expr_ty ) , "did you forget parentheses around the comprehension target? - %s" , "Có phải bạn đã quên dấu ngoặc đơn quanh đối tượng bao quát?" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -21042,7 +21042,7 @@ invalid_comprehension_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_comprehension[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "('[' | '{') star_named_expression ',' for_if_clauses"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "did you forget parentheses around the comprehension target?" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( a , b , "did you forget parentheses around the comprehension target? - %s" , "Có phải bạn đã quên dấu ngoặc đơn quanh đối tượng bao quát?" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -21097,7 +21097,7 @@ invalid_dict_comprehension_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_dict_comprehension[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'{' '**' bitwise_or for_if_clauses '}'"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "dict unpacking cannot be used in dict comprehension" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_LOCATION ( a , "dict unpacking cannot be used in dict comprehension - %s" , "Mở gói dict không thể dùng với bao quát dict" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;

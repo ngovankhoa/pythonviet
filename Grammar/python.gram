@@ -1210,18 +1210,18 @@ invalid_del_stmt:
     | 'del' a=star_expressions {
         RAISE_SYNTAX_ERROR_INVALID_TARGET(DEL_TARGETS, a) }
 invalid_block:
-    | NEWLINE !INDENT { RAISE_INDENTATION_ERROR("expected an indented block") }
+    | NEWLINE !INDENT { RAISE_INDENTATION_ERROR("expected an indented block - %s", "Cần phải thụt đầu dòng") }
 invalid_comprehension:
     | ('[' | '(' | '{') a=starred_expression for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "iterable unpacking cannot be used in comprehension") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "iterable unpacking cannot be used in comprehension - %s", "Mở gói đối tượng có thể lặp không thể dùng với bao quát") }
     | ('[' | '{') a=star_named_expression ',' b=star_named_expressions for_if_clauses {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, PyPegen_last_item(b, expr_ty),
-        "did you forget parentheses around the comprehension target?") }
+        "did you forget parentheses around the comprehension target? - %s", "Có phải bạn đã quên dấu ngoặc đơn quanh đối tượng bao quát?") }
     | ('[' | '{') a=star_named_expression b=',' for_if_clauses {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "did you forget parentheses around the comprehension target?") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "did you forget parentheses around the comprehension target? - %s", "Có phải bạn đã quên dấu ngoặc đơn quanh đối tượng bao quát?") }
 invalid_dict_comprehension:
     | '{' a='**' bitwise_or for_if_clauses '}' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "dict unpacking cannot be used in dict comprehension") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "dict unpacking cannot be used in dict comprehension - %s", "Mở gói dict không thể dùng với bao quát dict") }
 invalid_parameters:
     | a="/" ',' {
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "at least one argument must precede /") }
