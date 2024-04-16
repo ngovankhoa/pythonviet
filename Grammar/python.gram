@@ -1347,35 +1347,35 @@ invalid_class_pattern:
     | name_or_attr '(' a=invalid_class_argument_pattern  { RAISE_SYNTAX_ERROR_KNOWN_RANGE(
         PyPegen_first_item(a, pattern_ty),
         PyPegen_last_item(a, pattern_ty),
-        "positional patterns follow keyword patterns") }
+        "positional patterns follow keyword patterns - %s", "Các mẫu từ khóa phải đứng sau các mẫu vị trí") }
 invalid_class_argument_pattern[asdl_pattern_seq*]:
     | [positional_patterns ','] keyword_patterns ',' a=positional_patterns { a }
 invalid_if_stmt:
-    | 'if' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
+    | 'if' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':' - %s", "Cần phải có dấu ':'") }
     | a='if' a=named_expression ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'if' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after 'if' statement on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau câu lệnh 'if' tại dòng", a->lineno) }
 invalid_elif_stmt:
-    | 'elif' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
+    | 'elif' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':' - %s", "Cần phải có dấu ':'") }
     | a='elif' named_expression ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'elif' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after 'elif' statement on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau câu lệnh 'elif' tại dòng", a->lineno) }
 invalid_else_stmt:
     | a='else' ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'else' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after 'else' statement on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau câu lệnh 'else' tại dòng", a->lineno) }
 invalid_while_stmt:
-    | 'while' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
+    | 'while' named_expression NEWLINE { RAISE_SYNTAX_ERROR("expected ':' - %s", "Cần phải có dấu ':'") }
     | a='while' named_expression ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'while' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after 'while' statement on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau câu lệnh 'while' tại dòng", a->lineno) }
 invalid_for_stmt:
-    | [ASYNC] 'for' star_targets 'in' star_expressions NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
+    | [ASYNC] 'for' star_targets 'in' star_expressions NEWLINE { RAISE_SYNTAX_ERROR("expected ':' - %s", "Cần phải có dấu ':'") }
     | [ASYNC] a='for' star_targets 'in' star_expressions ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after 'for' statement on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after 'for' statement on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau câu lệnh 'for' tại dòng", a->lineno) }
 invalid_def_raw:
     | [ASYNC] a='def' NAME [type_params] '(' [params] ')' ['->' expression] ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after function definition on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after function definition on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau định nghĩa hàm tại dòng", a->lineno) }
 invalid_class_def_raw:
-    | 'class' NAME [type_params] ['(' [arguments] ')'] NEWLINE { RAISE_SYNTAX_ERROR("expected ':'") }
+    | 'class' NAME [type_params] ['(' [arguments] ')'] NEWLINE { RAISE_SYNTAX_ERROR("expected ':' - %s", "Cần phải có dấu ':'") }
     | a='class' NAME [type_params] ['(' [arguments] ')'] ':' NEWLINE !INDENT {
-        RAISE_INDENTATION_ERROR("expected an indented block after class definition on line %d", a->lineno) }
+        RAISE_INDENTATION_ERROR("expected an indented block after class definition on line %d - %s %d", a->lineno, "Cần phải thụt đầu dòng sau định nghĩa lớp tại dòng", a->lineno) }
 
 invalid_double_starred_kvpairs:
     | ','.double_starred_kvpair+ ',' invalid_kvpair

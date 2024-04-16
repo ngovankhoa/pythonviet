@@ -23611,7 +23611,7 @@ invalid_class_pattern_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_class_pattern[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "name_or_attr '(' invalid_class_argument_pattern"));
-            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( PyPegen_first_item ( a , pattern_ty ) , PyPegen_last_item ( a , pattern_ty ) , "positional patterns follow keyword patterns" );
+            _res = RAISE_SYNTAX_ERROR_KNOWN_RANGE ( PyPegen_first_item ( a , pattern_ty ) , PyPegen_last_item ( a , pattern_ty ) , "positional patterns follow keyword patterns - %s" , "Các mẫu từ khóa phải đứng sau các mẫu vị trí" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23716,7 +23716,7 @@ invalid_if_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_if_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'if' named_expression NEWLINE"));
-            _res = RAISE_SYNTAX_ERROR ( "expected ':'" );
+            _res = RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23751,7 +23751,7 @@ invalid_if_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_if_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'if' named_expression ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'if' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'if' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'if' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23802,7 +23802,7 @@ invalid_elif_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_elif_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'elif' named_expression NEWLINE"));
-            _res = RAISE_SYNTAX_ERROR ( "expected ':'" );
+            _res = RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23837,7 +23837,7 @@ invalid_elif_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_elif_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'elif' named_expression ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'elif' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'elif' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'elif' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23888,7 +23888,7 @@ invalid_else_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_else_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'else' ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'else' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'else' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'else' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23939,7 +23939,7 @@ invalid_while_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_while_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'while' named_expression NEWLINE"));
-            _res = RAISE_SYNTAX_ERROR ( "expected ':'" );
+            _res = RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23974,7 +23974,7 @@ invalid_while_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_while_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'while' named_expression ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'while' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'while' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'while' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -24035,7 +24035,7 @@ invalid_for_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_for_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "ASYNC? 'for' star_targets 'in' star_expressions NEWLINE"));
-            _res = RAISE_SYNTAX_ERROR ( "expected ':'" );
+            _res = RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -24080,7 +24080,7 @@ invalid_for_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_for_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "ASYNC? 'for' star_targets 'in' star_expressions ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'for' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'for' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'for' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -24157,7 +24157,7 @@ invalid_def_raw_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_def_raw[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "ASYNC? 'def' NAME type_params? '(' params? ')' ['->' expression] ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after function definition on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after function definition on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau định nghĩa hàm tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -24216,7 +24216,7 @@ invalid_class_def_raw_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_class_def_raw[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'class' NAME type_params? ['(' arguments? ')'] NEWLINE"));
-            _res = RAISE_SYNTAX_ERROR ( "expected ':'" );
+            _res = RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -24259,7 +24259,7 @@ invalid_class_def_raw_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_class_def_raw[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'class' NAME type_params? ['(' arguments? ')'] ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after class definition on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after class definition on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau định nghĩa lớp tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
