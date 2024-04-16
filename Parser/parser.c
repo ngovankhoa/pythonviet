@@ -23001,7 +23001,7 @@ invalid_except_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' '*'? expression ',' expressions ['as' NAME] ':'"));
-            _res = RAISE_SYNTAX_ERROR_STARTING_FROM ( a , "multiple exception types must be parenthesized" );
+            _res = RAISE_SYNTAX_ERROR_STARTING_FROM ( a , "multiple exception types must be parenthesized - %s" , "Nhiê`u kiểu exception phải được đặt trong ngoặc đơn" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23039,7 +23039,7 @@ invalid_except_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' '*'? expression ['as' NAME] NEWLINE"));
-            _res = RAISE_SYNTAX_ERROR ( "expected ':'" );
+            _res = RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23066,7 +23066,7 @@ invalid_except_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' NEWLINE"));
-            _res = RAISE_SYNTAX_ERROR ( "expected ':'" );
+            _res = RAISE_SYNTAX_ERROR ( "expected ':' - %s" , "Cần phải có dấu ':'" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23096,7 +23096,7 @@ invalid_except_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' '*' (NEWLINE | ':')"));
-            _res = RAISE_SYNTAX_ERROR ( "expected one or more exception types" );
+            _res = RAISE_SYNTAX_ERROR ( "expected one or more exception types - %s" , "Cần phải có một hoặc nhiê`u kiểu exception" );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23147,7 +23147,7 @@ invalid_finally_stmt_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_finally_stmt[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'finally' ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'finally' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'finally' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'finally' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23207,7 +23207,7 @@ invalid_except_stmt_indent_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt_indent[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' expression ['as' NAME] ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'except' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'except' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'except' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
@@ -23239,7 +23239,7 @@ invalid_except_stmt_indent_rule(Parser *p)
         )
         {
             D(fprintf(stderr, "%*c+ invalid_except_stmt_indent[%d-%d]: %s succeeded!\n", p->level, ' ', _mark, p->mark, "'except' ':' NEWLINE !INDENT"));
-            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'except' statement on line %d" , a -> lineno );
+            _res = RAISE_INDENTATION_ERROR ( "expected an indented block after 'except' statement on line %d - %s %d" , a -> lineno , "Cần phải thụt đầu dòng sau câu lệnh 'except' tại dòng" , a -> lineno );
             if (_res == NULL && PyErr_Occurred()) {
                 p->error_indicator = 1;
                 p->level--;
