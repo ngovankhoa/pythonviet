@@ -1130,7 +1130,7 @@ func_type_comment[Token*]:
 # From here on, there are rules for invalid syntax with specialised error messages
 invalid_arguments:
     | ((','.(starred_expression | ( assignment_expression | expression !':=') !'=')+ ',' kwargs) | kwargs) a=',' ','.(starred_expression !'=')+ {
-        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "iterable argument unpacking follows keyword argument unpacking - %s", "Mở gói tham số có thể duyệt theo sau mở gói tham số từ khóa") }
+        RAISE_SYNTAX_ERROR_STARTING_FROM(a, "iterable argument unpacking follows keyword argument unpacking - %s", "Mở gói tham số có thể lặp theo sau mở gói tham số từ khóa") }
     | a=expression b=for_if_clauses ',' [args | expression for_if_clauses] {
         RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, _PyPegen_get_last_comprehension_item(PyPegen_last_item(b, comprehension_ty)), "Generator expression must be parenthesized - %s", "Biểu thức sinh cần phải có dấu ngoặc đơn") }
     | a=NAME b='=' expression for_if_clauses {
@@ -1224,19 +1224,19 @@ invalid_dict_comprehension:
         RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "dict unpacking cannot be used in dict comprehension - %s", "Mở gói dict không thể dùng với bao quát dict") }
 invalid_parameters:
     | a="/" ',' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "at least one argument must precede /") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "at least one argument must precede / - %s", "Phải có ít nhất một tham số đứng trước /") }
     | (slash_no_default | slash_with_default) param_maybe_default* a='/' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ may appear only once") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ may appear only once - %s", "/ có thể chỉ xuất hiện một lần") }
     | slash_no_default? param_no_default* invalid_parameters_helper a=param_no_default {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "parameter without a default follows parameter with a default - %", "Tham số với giá trị mặc định phải đứng sau tham số không có giá trị mặc định") }
     | param_no_default* a='(' param_no_default+ ','? b=')' {
-        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "Function parameters cannot be parenthesized") }
+        RAISE_SYNTAX_ERROR_KNOWN_RANGE(a, b, "Function parameters cannot be parenthesized - %s", "Các tham số của hàm không thể nằm trong dấu ngoặc đơn") }
     | (slash_no_default | slash_with_default)? param_maybe_default* '*' (',' | param_no_default) param_maybe_default* a='/' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ must be ahead of *") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "/ must be ahead of * - %s", "/ phải đứng trước *") }
     | param_maybe_default+ '/' a='*' {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expected comma between / and *") }
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expected comma between / and * - %s", "Cần phải có dấu phảy giữa / và *") }
 invalid_default:
-    | a='=' &(')'|',') { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expected default value expression") }
+    | a='=' &(')'|',') { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "expected default value expression - %s", "Cần phải có biểu thức giá trị mặc định") }
 invalid_star_etc:
     | a='*' (')' | ',' (')' | '**')) { RAISE_SYNTAX_ERROR_KNOWN_LOCATION(a, "named arguments must follow bare *") }
     | '*' ',' TYPE_COMMENT { RAISE_SYNTAX_ERROR("bare * has associated type comment") }
