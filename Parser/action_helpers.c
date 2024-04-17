@@ -865,7 +865,7 @@ expr_ty
 _PyPegen_ensure_imaginary(Parser *p, expr_ty exp)
 {
     if (exp->kind != Constant_kind || !PyComplex_CheckExact(exp->v.Constant.value)) {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(exp, "imaginary number required in complex literal");
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(exp, "imaginary number required in complex literal - %s", "Số ảo được yêu cầu ở dạng số phức");
         return NULL;
     }
     return exp;
@@ -875,7 +875,7 @@ expr_ty
 _PyPegen_ensure_real(Parser *p, expr_ty exp)
 {
     if (exp->kind != Constant_kind || PyComplex_CheckExact(exp->v.Constant.value)) {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(exp, "real number required in complex literal");
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(exp, "real number required in complex literal - %s", "Số thực được yêu cầu ở dạng số phức");
         return NULL;
     }
     return exp;
@@ -990,7 +990,7 @@ _PyPegen_check_fstring_conversion(Parser *p, Token* conv_token, expr_ty conv)
     if (conv_token->lineno != conv->lineno || conv_token->end_col_offset != conv->col_offset) {
         return RAISE_SYNTAX_ERROR_KNOWN_RANGE(
             conv_token, conv,
-            "f-string: conversion type must come right after the exclamanation mark"
+            "f-string: conversion type must come right after the exclamanation mark - %s", "Kiểu chuyển đổi phải ở ngay sau dấu chấm than"
         );
     }
     return result_token_with_metadata(p, conv, conv_token->metadata);
@@ -1091,8 +1091,9 @@ _PyPegen_get_expr_name(expr_ty e)
             return "named expression";
         default:
             PyErr_Format(PyExc_SystemError,
-                         "unexpected expression in assignment %d (line %d)",
-                         e->kind, e->lineno);
+                         "unexpected expression in assignment %d (line %d) - %s %d (%s %d)",                         
+                         e->kind, e->lineno,
+                         "Biểu thức không mong đợi ở lệnh gán", e->kind, "dòng", e->lineno);
             return NULL;
     }
 }
@@ -1208,12 +1209,14 @@ void *_PyPegen_arguments_parsing_error(Parser *p, expr_ty e) {
 
     const char *msg = NULL;
     if (kwarg_unpacking) {
-        msg = "positional argument follows keyword argument unpacking";
+        //msg = "positional argument follows keyword argument unpacking";
+        return RAISE_SYNTAX_ERROR("positional argument follows keyword argument unpacking - %s", "Mở gói tham số từ khóa phải đứng sau tham số vị trí");
     } else {
-        msg = "positional argument follows keyword argument";
+        //msg = "positional argument follows keyword argument";
+        return RAISE_SYNTAX_ERROR("positional argument follows keyword argument - %s", "Tham số từ khóa phải đứng sau tham số vị trí");
     }
 
-    return RAISE_SYNTAX_ERROR(msg);
+    //return RAISE_SYNTAX_ERROR(msg);
 }
 
 void *
@@ -1236,7 +1239,7 @@ _PyPegen_nonparen_genexp_in_call(Parser *p, expr_ty args, asdl_comprehension_seq
     return RAISE_SYNTAX_ERROR_KNOWN_RANGE(
         (expr_ty) asdl_seq_GET(args->v.Call.args, len - 1),
         _PyPegen_get_last_comprehension_item(last_comprehension),
-        "Generator expression must be parenthesized"
+        "Generator expression must be parenthesized - %s", "Biểu thức sinh phải ở trong dấu ngoặc đơn"
     );
 }
 
@@ -1441,8 +1444,9 @@ expr_ty _PyPegen_formatted_value(Parser *p, expr_ty expression, Token *debug, Re
         if (PyUnicode_GET_LENGTH(conversion_expr->v.Name.id) > 1 ||
             !(first == 's' || first == 'r' || first == 'a')) {
             RAISE_SYNTAX_ERROR_KNOWN_LOCATION(conversion_expr,
-                                              "f-string: invalid conversion character %R: expected 's', 'r', or 'a'",
-                                              conversion_expr->v.Name.id);
+                                              "f-string: invalid conversion character %R: expected 's', 'r', or 'a' - %s '%R'",
+                                              conversion_expr->v.Name.id,
+                                              "Ký tự chuyển đổi phải là 's', 'r' hoặc 'a' chứ không thể là", conversion_expr->v.Name.id);
             return NULL;
         }
 
@@ -1526,7 +1530,7 @@ _PyPegen_concatenate_strings(Parser *p, asdl_expr_seq *strings,
     }
 
     if ((unicode_string_found || f_string_found) && bytes_found) {
-        RAISE_SYNTAX_ERROR("cannot mix bytes and nonbytes literals");
+        RAISE_SYNTAX_ERROR("cannot mix bytes and nonbytes literals - %s", "Không thể trộn lẫn các byte với chuỗi không phải byte");
         return NULL;
     }
 
