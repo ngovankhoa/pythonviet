@@ -226,7 +226,7 @@ class ASDLSyntaxError(Exception):
         self.lineno = lineno or '<unknown>'
 
     def __str__(self):
-        return 'Syntax error on line {0.lineno}: {0.msg}'.format(self)
+        return 'Syntax error on line {0.lineno}: {0.msg} - Lỗi cú pháp tại dòng {0.lineno}: {0.msg}'.format(self)
 
 def tokenize_asdl(buf):
     """Tokenize the given buffer. Yield Token objects."""
@@ -247,7 +247,7 @@ def tokenize_asdl(buf):
                 try:
                     op_kind = TokenKind.operator_table[c]
                 except KeyError:
-                    raise ASDLSyntaxError('Invalid operator %s' % c, lineno)
+                    raise ASDLSyntaxError('Invalid operator %s - Toán tử không hợp lệ %s' % (c, c), lineno)
                 yield Token(op_kind, c, lineno)
 
 class ASDLParser:
@@ -273,7 +273,7 @@ class ASDLParser:
             self._advance()
         else:
             raise ASDLSyntaxError(
-                'Expected "module" (found {})'.format(self.cur_token.value),
+                'Expected "module" (found {}) - Mong đợi "module" nhưng lại tìm thấy {}'.format(self.cur_token.value, self.cur_token.value),
                 self.cur_token.lineno)
         name = self._match(self._id_kinds)
         self._match(TokenKind.LBrace)
@@ -377,7 +377,7 @@ class ASDLParser:
             return value
         else:
             raise ASDLSyntaxError(
-                'Unmatched {} (found {})'.format(kind, self.cur_token.kind),
+                'Unmatched {} (found {}) - Không khớp {} (tìm thấy {})'.format(kind, self.cur_token.kind, kind, self.cur_token.kind),
                 self.cur_token.lineno)
 
     def _at_keyword(self, keyword):
