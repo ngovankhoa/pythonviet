@@ -124,7 +124,7 @@ class EmitVisitor(asdl.VisitorBase):
     def metadata(self):
         if self._metadata is None:
             raise ValueError(
-                "%s was expecting to be annnotated with metadata"
+                "%s was expecting to be annnotated with metadata - Cần phải được khai báo với dữ liệu đặc tả"
                 % type(self).__name__
             )
         return self._metadata
@@ -662,7 +662,7 @@ class Obj2ModVisitor(PickleVisitor):
                 elif not self.isSimpleType(field):
                     self.emit("%s = NULL;" % field.name, depth+1)
                 else:
-                    raise TypeError("could not determine the default value for %s" % field.name)
+                    raise TypeError("could not determine the default value for %s - Không thể xác định giá trị mặc định cho %s" % (field.name, field.name))
             self.emit("}", depth)
             self.emit("else {", depth)
 
