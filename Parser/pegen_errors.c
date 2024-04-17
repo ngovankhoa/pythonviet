@@ -52,8 +52,8 @@ raise_unclosed_parentheses_error(Parser *p) {
        int error_col = p->tok->parencolstack[p->tok->level-1];
        RAISE_ERROR_KNOWN_LOCATION(p, PyExc_SyntaxError,
                                   error_lineno, error_col, error_lineno, -1,
-                                  "'%c' was never closed",
-                                  p->tok->parenstack[p->tok->level-1]);
+                                  "'%c' was never closed - '%c' %s",
+                                  p->tok->parenstack[p->tok->level-1], p->tok->parenstack[p->tok->level-1], "chưa bao giờ được đóng");
 }
 
 int
@@ -69,17 +69,19 @@ _Pypegen_tokenizer_error(Parser *p)
     p->error_indicator = 1;
     switch (p->tok->done) {
         case E_TOKEN:
-            msg = "invalid token";
+            RAISE_ERROR_KNOWN_LOCATION(p, errtype, p->tok->lineno,
+                               col_offset >= 0 ? col_offset : 0,
+                               p->tok->lineno, -1, "invalid token - %s", "Token không hợp lệ");            
             break;
         case E_EOF:
             if (p->tok->level) {
                 raise_unclosed_parentheses_error(p);
             } else {
-                RAISE_SYNTAX_ERROR("unexpected EOF while parsing");
+                RAISE_SYNTAX_ERROR("unexpected EOF while parsing -%s", "Không mong đợi kết thúc file khi đang phân tích");
             }
             return -1;
         case E_DEDENT:
-            RAISE_INDENTATION_ERROR("unindent does not match any outer indentation level");
+            RAISE_INDENTATION_ERROR("unindent does not match any outer indentation level - %s", "Canh đầu dòng không khớp với mức thụt đầu dòng ở các mức ngoài");
             return -1;
         case E_INTR:
             if (!PyErr_Occurred()) {
@@ -91,15 +93,21 @@ _Pypegen_tokenizer_error(Parser *p)
             return -1;
         case E_TABSPACE:
             errtype = PyExc_TabError;
-            msg = "inconsistent use of tabs and spaces in indentation";
+            RAISE_ERROR_KNOWN_LOCATION(p, errtype, p->tok->lineno,
+                               col_offset >= 0 ? col_offset : 0,
+                               p->tok->lineno, -1, "inconsistent use of tabs and spaces in indentation - %s", "Không đồng nhất giữa việc dùng tab và khoảng trống");                        
             break;
         case E_TOODEEP:
             errtype = PyExc_IndentationError;
-            msg = "too many levels of indentation";
+            RAISE_ERROR_KNOWN_LOCATION(p, errtype, p->tok->lineno,
+                               col_offset >= 0 ? col_offset : 0,
+                               p->tok->lineno, -1, "too many levels of indentation - %s", "Quá nhiều mức thụt đầu dòng");            
             break;
         case E_LINECONT: {
             col_offset = p->tok->cur - p->tok->buf - 1;
-            msg = "unexpected character after line continuation character";
+            RAISE_ERROR_KNOWN_LOCATION(p, errtype, p->tok->lineno,
+                               col_offset >= 0 ? col_offset : 0,
+                               p->tok->lineno, -1, "unexpected character after line continuation character - %s", "Ký tự không mong đợi sau ký tự tiếp tục dòng");                        
             break;
         }
         case E_COLUMNOVERFLOW:
@@ -107,12 +115,10 @@ _Pypegen_tokenizer_error(Parser *p)
                     "Parser column offset overflow - source line is too big");
             return -1;
         default:
-            msg = "unknown parsing error";
-    }
-
-    RAISE_ERROR_KNOWN_LOCATION(p, errtype, p->tok->lineno,
+            RAISE_ERROR_KNOWN_LOCATION(p, errtype, p->tok->lineno,
                                col_offset >= 0 ? col_offset : 0,
-                               p->tok->lineno, -1, msg);
+                               p->tok->lineno, -1, "unknown parsing error - %s", "Lỗi phân tích không xác định");            
+    }    
     return -1;
 }
 
@@ -422,13 +428,17 @@ _Pypegen_set_syntax_error(Parser* p, Token* last_token) {
         if (p->tok->level) {
             raise_unclosed_parentheses_error(p);
         } else {
-            RAISE_SYNTAX_ERROR("unexpected EOF while parsing");
+            RAISE_SYNTAX_ERROR("unexpected EOF while parsing - %s", "Không mong đợi kết thúc file trong khi phân tích");
         }
         return;
     }
     // Indentation error in the tokenizer
     if (last_token->type == INDENT || last_token->type == DEDENT) {
-        RAISE_INDENTATION_ERROR(last_token->type == INDENT ? "unexpected indent" : "unexpected unindent");
+        if (last_token->type == INDENT) {
+            RAISE_INDENTATION_ERROR("unexpected indent - %s", "Mức thụt đầu dòng không phù hợp");
+        } else {
+            RAISE_INDENTATION_ERROR("unexpected unindent - %s", "Mức canh lề dòng không phù hợp");            
+        }        
         return;
     }
     // Unknown error (generic case)
