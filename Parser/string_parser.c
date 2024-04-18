@@ -25,9 +25,9 @@ warn_invalid_escape_sequence(Parser *p, const char *first_invalid_escape, Token 
     int octal = ('4' <= c && c <= '7');
     PyObject *msg =
         octal
-        ? PyUnicode_FromFormat("invalid octal escape sequence '\\%.3s'",
-                               first_invalid_escape)
-        : PyUnicode_FromFormat("invalid escape sequence '\\%c'", c);
+        ? PyUnicode_FromFormat("invalid octal escape sequence '\\%.3s' - %s '\\%.3s'",
+                               first_invalid_escape, "Chuỗi thoát bát phân không hợp lệ", first_invalid_escape)
+        : PyUnicode_FromFormat("invalid escape sequence '\\%c' - %s '\\%c'", c, "Chuỗi thoát không hợp lệ");
     if (msg == NULL) {
         return -1;
     }
@@ -50,11 +50,11 @@ warn_invalid_escape_sequence(Parser *p, const char *first_invalid_escape, Token 
                error location, if p->known_err_token is not set. */
             p->known_err_token = t;
             if (octal) {
-                RAISE_SYNTAX_ERROR("invalid octal escape sequence '\\%.3s'",
-                                   first_invalid_escape);
+                RAISE_SYNTAX_ERROR("invalid octal escape sequence '\\%.3s' - %s '\\%.3s'",
+                                   first_invalid_escape, "Chuỗi thoát bát phân không hợp lệ", first_invalid_escape);
             }
             else {
-                RAISE_SYNTAX_ERROR("invalid escape sequence '\\%c'", c);
+                RAISE_SYNTAX_ERROR("invalid escape sequence '\\%c' - %s '\\%c'", c, "Chuỗi thoát không hợp lệ", c);
             }
         }
         Py_DECREF(msg);
@@ -230,7 +230,8 @@ _PyPegen_parse_string(Parser *p, Token *t)
     s++;
     len = strlen(s);
     if (len > INT_MAX) {
-        PyErr_SetString(PyExc_OverflowError, "string to parse is too long");
+        //PyErr_SetString(PyExc_OverflowError, "string to parse is too long");
+        PyErr_FormatV(PyExc_OverflowError, "string to parse is too long - %s", "Chuỗi xử lý quá dài");
         return NULL;
     }
     if (s[--len] != quote) {
@@ -260,8 +261,7 @@ _PyPegen_parse_string(Parser *p, Token *t)
             if (Py_CHARMASK(*ch) >= 0x80) {
                 RAISE_SYNTAX_ERROR_KNOWN_LOCATION(
                                    t,
-                                   "bytes can only contain ASCII "
-                                   "literal characters");
+                                   "bytes can only contain ASCII literal characters - %s", "Byte chỉ có thể chứa các ký tự ASCII");
                 return NULL;
             }
         }

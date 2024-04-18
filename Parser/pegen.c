@@ -447,7 +447,7 @@ _PyPegen_expect_forced_result(Parser *p, void* result, const char* expected) {
         return NULL;
     }
     if (result == NULL) {
-        RAISE_SYNTAX_ERROR("expected (%s)", expected);
+        RAISE_SYNTAX_ERROR("expected (%s) - %s (%s)", expected, "Mong đợi", expected);
         return NULL;
     }
     return result;
@@ -468,7 +468,7 @@ _PyPegen_expect_forced_token(Parser *p, int type, const char* expected) {
     }
     Token *t = p->tokens[p->mark];
     if (t->type != type) {
-        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(t, "expected '%s'", expected);
+        RAISE_SYNTAX_ERROR_KNOWN_LOCATION(t, "expected '%s' - %s '%s'", expected, "Mong đợi", expected);
         return NULL;
     }
     p->mark += 1;
@@ -902,7 +902,7 @@ _PyPegen_run_parser(Parser *p)
     if (res == NULL) {
         if ((p->flags & PyPARSE_ALLOW_INCOMPLETE_INPUT) &&  _is_end_of_source(p)) {
             PyErr_Clear();
-            return RAISE_SYNTAX_ERROR("incomplete input");
+            return RAISE_SYNTAX_ERROR("incomplete input - %s", "Đầu vào chưa hoàn chỉnh");
         }
         if (PyErr_Occurred() && !PyErr_ExceptionMatches(PyExc_SyntaxError)) {
             return NULL;
