@@ -277,7 +277,7 @@ check_coding_spec(const char* line, Py_ssize_t size, struct tok_state *tok,
         if (strcmp(tok->encoding, cs) != 0) {
             error_ret(tok);
             PyErr_Format(PyExc_SyntaxError,
-                         "encoding problem: %s with BOM", cs);
+                         "encoding problem: %s with BOM - %s: %s %s", cs, "Vấn đề mã hóa", cs, "với BOM");
             PyMem_Free(cs);
             return 0;
         }
@@ -770,11 +770,8 @@ ensure_utf8(char *line, struct tok_state *tok)
     }
     if (badchar) {
         PyErr_Format(PyExc_SyntaxError,
-                     "Non-UTF-8 code starting with '\\x%.2x' "
-                     "in file %U on line %i, "
-                     "but no encoding declared; "
-                     "see https://peps.python.org/pep-0263/ for details",
-                     badchar, tok->filename, tok->lineno);
+                     "Non-UTF-8 code starting with '\\x%.2x' in file %U on line %i, but no encoding declared; see https://peps.python.org/pep-0263/ for details - %s '\\x%.2x' %s %U %s %i, %s",
+                     badchar, tok->filename, tok->lineno, "Không phải mã UTF-8 bắt đầu với", badchar, "trong file", tok->filename, "trên dòng", tok->lineno, "nhưng không có khai báo mã hóa; xem https://peps.python.org/pep-0263/ để biết thêm chi tiết");
         return 0;
     }
     return 1;
@@ -1108,7 +1105,7 @@ tok_readline_string(struct tok_state* tok) {
     }
     if(tok->encoding != NULL) {
         if (!PyBytes_Check(raw_line)) {
-            PyErr_Format(PyExc_TypeError, "readline() returned a non-bytes object");
+            PyErr_Format(PyExc_TypeError, "readline() returned a non-bytes object -%s", "readline() đã trả về các đối tượng không phải là các byte");
             error_ret(tok);
             goto error;
         }
@@ -1121,7 +1118,7 @@ tok_readline_string(struct tok_state* tok) {
         }
     } else {
         if(!PyUnicode_Check(raw_line)) {
-            PyErr_Format(PyExc_TypeError, "readline() returned a non-string object");
+            PyErr_Format(PyExc_TypeError, "readline() returned a non-string object - %s", "readline() đã trả về một đối tượng không phải là string");
             error_ret(tok);
             goto error;
         }
@@ -1446,7 +1443,7 @@ tok_nextc(struct tok_state *tok)
         tok->line_start = tok->cur;
 
         if (contains_null_bytes(tok->line_start, tok->inp - tok->line_start)) {
-            syntaxerror(tok, "source code cannot contain null bytes");
+            syntaxerror(tok, "source code cannot contain null bytes - %s", "Mã nguồn không thể chứa các byte null");
             tok->cur = tok->inp;
             return EOF;
         }
@@ -1597,8 +1594,8 @@ warn_invalid_escape_sequence(struct tok_state *tok, int first_invalid_escape_cha
     }
 
     PyObject *msg = PyUnicode_FromFormat(
-        "invalid escape sequence '\\%c'",
-        (char) first_invalid_escape_char
+        "invalid escape sequence '\\%c' - %s '\\%c'",
+        (char) first_invalid_escape_char, "Chuỗi thoát không hợp lệ", (char) first_invalid_escape_char
     );
 
     if (msg == NULL) {
@@ -1613,7 +1610,7 @@ warn_invalid_escape_sequence(struct tok_state *tok, int first_invalid_escape_cha
             /* Replace the SyntaxWarning exception with a SyntaxError
                to get a more accurate error report */
             PyErr_Clear();
-            return syntaxerror(tok, "invalid escape sequence '\\%c'", (char) first_invalid_escape_char);
+            return syntaxerror(tok, "invalid escape sequence '\\%c' - %s '\\%c'", (char) first_invalid_escape_char, "Chuỗi thoát không hợp lệ", (char) first_invalid_escape_char);
         }
 
         return -1;
@@ -1689,7 +1686,7 @@ verify_end_of_number(struct tok_state *tok, int c, const char *kind) {
     if (r) {
         tok_backup(tok, c);
         if (parser_warn(tok, PyExc_SyntaxWarning,
-                "invalid %s literal", kind))
+                "invalid %s literal - %s %s %s", kind, "Chuỗi", kind, "không hợp lệ"))
         {
             return 0;
         }
@@ -1698,7 +1695,7 @@ verify_end_of_number(struct tok_state *tok, int c, const char *kind) {
     else /* In future releases, only error will remain. */
     if (c < 128 && is_potential_identifier_char(c)) {
         tok_backup(tok, c);
-        syntaxerror(tok, "invalid %s literal", kind);
+        syntaxerror(tok, "invalid %s literal - %s %s %s", kind, "Chuỗi", kind, "không hợp lệ");
         return 0;
     }
     return 1;
@@ -1749,10 +1746,10 @@ verify_identifier(struct tok_state *tok)
         }
         Py_DECREF(s);
         if (Py_UNICODE_ISPRINTABLE(ch)) {
-            syntaxerror(tok, "invalid character '%c' (U+%04X)", ch, ch);
+            syntaxerror(tok, "invalid character '%c' (U+%04X) - %s '%c' (U+%04X)", ch, ch, "Ký tự không hợp lệ", ch, ch);
         }
         else {
-            syntaxerror(tok, "invalid non-printable character U+%04X", ch);
+            syntaxerror(tok, "invalid non-printable character U+%04X - %s U+%04X", ch, "Ký tự không in được không hợp lệ", ch);
         }
         return 0;
     }
@@ -1775,7 +1772,7 @@ tok_decimal_tail(struct tok_state *tok)
         c = tok_nextc(tok);
         if (!isdigit(c)) {
             tok_backup(tok, c);
-            syntaxerror(tok, "invalid decimal literal");
+            syntaxerror(tok, "invalid decimal literal - %s", "Chuỗi số không hợp lệ");
             return 0;
         }
     }
@@ -2271,7 +2268,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                     }
                     if (!isxdigit(c)) {
                         tok_backup(tok, c);
-                        return MAKE_TOKEN(syntaxerror(tok, "invalid hexadecimal literal"));
+                        return MAKE_TOKEN(syntaxerror(tok, "invalid hexadecimal literal - %s", "Chuỗi số thập lục phân không hợp lệ"));
                     }
                     do {
                         c = tok_nextc(tok);
@@ -2291,11 +2288,11 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                     if (c < '0' || c >= '8') {
                         if (isdigit(c)) {
                             return MAKE_TOKEN(syntaxerror(tok,
-                                    "invalid digit '%c' in octal literal", c));
+                                    "invalid digit '%c' in octal literal - %s '%c' %s", c, "Chữ số không hợp lệ", c, "trong chuỗi số bát phân"));
                         }
                         else {
                             tok_backup(tok, c);
-                            return MAKE_TOKEN(syntaxerror(tok, "invalid octal literal"));
+                            return MAKE_TOKEN(syntaxerror(tok, "invalid octal literal - %s", "Chữ số bát phân không hợp lệ"));
                         }
                     }
                     do {
@@ -2304,7 +2301,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                 } while (c == '_');
                 if (isdigit(c)) {
                     return MAKE_TOKEN(syntaxerror(tok,
-                            "invalid digit '%c' in octal literal", c));
+                            "invalid digit '%c' in octal literal - %s '%c' %s", c, "Chữ số không hợp lệ", c, "trong chuỗi số bát phân"));
                 }
                 if (!verify_end_of_number(tok, c, "octal")) {
                     return MAKE_TOKEN(ERRORTOKEN);
@@ -2319,11 +2316,11 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                     }
                     if (c != '0' && c != '1') {
                         if (isdigit(c)) {
-                            return MAKE_TOKEN(syntaxerror(tok, "invalid digit '%c' in binary literal", c));
+                            return MAKE_TOKEN(syntaxerror(tok, "invalid digit '%c' in binary literal - %s '%c' %s", c, "Chữ số không hợp lệ", c, "trong chuỗi số nhị phân"));
                         }
                         else {
                             tok_backup(tok, c);
-                            return MAKE_TOKEN(syntaxerror(tok, "invalid binary literal"));
+                            return MAKE_TOKEN(syntaxerror(tok, "invalid binary literal - %s", "Chữ số nhị phân không hợp lệ"));
                         }
                     }
                     do {
@@ -2331,7 +2328,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                     } while (c == '0' || c == '1');
                 } while (c == '_');
                 if (isdigit(c)) {
-                    return MAKE_TOKEN(syntaxerror(tok, "invalid digit '%c' in binary literal", c));
+                    return MAKE_TOKEN(syntaxerror(tok, "invalid digit '%c' in binary literal - %s '%c' %s", c, "Chữ số không hợp lệ", c, "trong chuỗi số nhị phân"));
                 }
                 if (!verify_end_of_number(tok, c, "binary")) {
                     return MAKE_TOKEN(ERRORTOKEN);
@@ -2346,7 +2343,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                         c = tok_nextc(tok);
                         if (!isdigit(c)) {
                             tok_backup(tok, c);
-                            return MAKE_TOKEN(syntaxerror(tok, "invalid decimal literal"));
+                            return MAKE_TOKEN(syntaxerror(tok, "invalid decimal literal - %s", "Chữ số không hợp lệ"));
                         }
                     }
                     if (c != '0') {
@@ -2378,9 +2375,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                     return MAKE_TOKEN(syntaxerror_known_range(
                             tok, (int)(tok->start + 1 - tok->line_start),
                             (int)(zeros_end - tok->line_start),
-                            "leading zeros in decimal integer "
-                            "literals are not permitted; "
-                            "use an 0o prefix for octal integers"));
+                            "leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers - %s", "Số thập phân không được phép bắt đầu bằng chữ số 0; nếu muốn dùng số bát phân, hãy bắt đầu bằng 0o"));
                 }
                 if (!verify_end_of_number(tok, c, "decimal")) {
                     return MAKE_TOKEN(ERRORTOKEN);
@@ -2416,7 +2411,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                         c = tok_nextc(tok);
                         if (!isdigit(c)) {
                             tok_backup(tok, c);
-                            return MAKE_TOKEN(syntaxerror(tok, "invalid decimal literal"));
+                            return MAKE_TOKEN(syntaxerror(tok, "invalid decimal literal - %s", "Chữ số không hợp lệ"));
                         }
                     } else if (!isdigit(c)) {
                         tok_backup(tok, c);
@@ -2485,7 +2480,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
         p_start = tok->start;
         p_end = tok->cur;
         if (tok->tok_mode_stack_index + 1 >= MAXFSTRINGLEVEL) {
-            return MAKE_TOKEN(syntaxerror(tok, "too many nested f-strings"));
+            return MAKE_TOKEN(syntaxerror(tok, "too many nested f-strings - %s", "Quá nhiều chuỗi con f-strings bên trong"));
         }
         tokenizer_mode *the_current_tok = TOK_NEXT_MODE(tok);
         the_current_tok->kind = TOK_FSTRING_MODE;
@@ -2577,21 +2572,19 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                     tokenizer_mode *the_current_tok = TOK_GET_MODE(tok);
                     if (the_current_tok->f_string_quote == quote &&
                         the_current_tok->f_string_quote_size == quote_size) {
-                        return MAKE_TOKEN(syntaxerror(tok, "f-string: expecting '}'", start));
+                        return MAKE_TOKEN(syntaxerror(tok, "f-string: expecting '}' - %s", "Cần dấu '}'"));
                     }
                 }
 
                 if (quote_size == 3) {
-                    syntaxerror(tok, "unterminated triple-quoted string literal"
-                                     " (detected at line %d)", start);
+                    syntaxerror(tok, "unterminated triple-quoted string literal (detected at line %d) - %s %d)", start, "Không xác định chuỗi string 3 dấu trích dẫn (tại dòng", start);
                     if (c != '\n') {
                         tok->done = E_EOFS;
                     }
                     return MAKE_TOKEN(ERRORTOKEN);
                 }
                 else {
-                    syntaxerror(tok, "unterminated string literal (detected at"
-                                     " line %d)", start);
+                    syntaxerror(tok, "unterminated string literal (detected at line %d) - %s %d)", start, "Không xác định chuỗi string (tại dòng", start);
                     if (c != '\n') {
                         tok->done = E_EOLS;
                     }
@@ -2674,7 +2667,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
     case '[':
     case '{':
         if (tok->level >= MAXLEVEL) {
-            return MAKE_TOKEN(syntaxerror(tok, "too many nested parentheses"));
+            return MAKE_TOKEN(syntaxerror(tok, "too many nested parentheses - %s", "Quá nhiều dấu ngoặc đơn con"));
         }
         tok->parenstack[tok->level] = c;
         tok->parenlinenostack[tok->level] = tok->lineno;
@@ -2688,10 +2681,10 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
     case ']':
     case '}':
         if (INSIDE_FSTRING(tok) && !current_tok->curly_bracket_depth && c == '}') {
-            return MAKE_TOKEN(syntaxerror(tok, "f-string: single '}' is not allowed"));
+            return MAKE_TOKEN(syntaxerror(tok, "f-string: single '}' is not allowed - %s", "Không cho phép dấu '}' đơn"));
         }
         if (!tok->tok_extra_tokens && !tok->level) {
-            return MAKE_TOKEN(syntaxerror(tok, "unmatched '%c'", c));
+            return MAKE_TOKEN(syntaxerror(tok, "unmatched '%c' - %s '%c'", c, "Không khớp", c));
         }
         if (tok->level > 0) {
             tok->level--;
@@ -2708,20 +2701,18 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
                     assert(current_tok->curly_bracket_depth >= 0);
                     int previous_bracket = current_tok->curly_bracket_depth - 1;
                     if (previous_bracket == current_tok->curly_bracket_expr_start_depth) {
-                        return MAKE_TOKEN(syntaxerror(tok, "f-string: unmatched '%c'", c));
+                        return MAKE_TOKEN(syntaxerror(tok, "f-string: unmatched '%c' - %s '%c'", c, "Không khớp", c));
                     }
                 }
                 if (tok->parenlinenostack[tok->level] != tok->lineno) {
                     return MAKE_TOKEN(syntaxerror(tok,
-                            "closing parenthesis '%c' does not match "
-                            "opening parenthesis '%c' on line %d",
-                            c, opening, tok->parenlinenostack[tok->level]));
+                            "closing parenthesis '%c' does not match opening parenthesis '%c' on line %d - %s '%c' %s '%c' %s %d",
+                            c, opening, tok->parenlinenostack[tok->level], "Dấu đóng ngoặc đơn", c, "không khớp với dấu mở ngoặc đơn", opening, "tại dòng", tok->parenlinenostack[tok->level]));
                 }
                 else {
                     return MAKE_TOKEN(syntaxerror(tok,
-                            "closing parenthesis '%c' does not match "
-                            "opening parenthesis '%c'",
-                            c, opening));
+                            "closing parenthesis '%c' does not match opening parenthesis '%c' - %s '%c' %s '%c'",
+                            c, opening, "Dấu đóng ngoặc đơn", c, "không khớp với dấu mở ngoặc đơn", opening));
                 }
             }
         }
@@ -2740,7 +2731,7 @@ tok_get_normal_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct t
     }
 
     if (!Py_UNICODE_ISPRINTABLE(c)) {
-        return MAKE_TOKEN(syntaxerror(tok, "invalid non-printable character U+%04X", c));
+        return MAKE_TOKEN(syntaxerror(tok, "invalid non-printable character U+%04X - %s U+%04X", c, "Ký tự không thể in không hợp lệ", c));
     }
 
     if( c == '=' && INSIDE_FSTRING_EXPR(current_tok)) {
@@ -2775,7 +2766,7 @@ tok_get_fstring_mode(struct tok_state *tok, tokenizer_mode* current_tok, struct 
         if (peek1 != '{') {
             current_tok->curly_bracket_expr_start_depth++;
             if (current_tok->curly_bracket_expr_start_depth >= MAX_EXPR_NESTING) {
-                return MAKE_TOKEN(syntaxerror(tok, "f-string: expressions nested too deeply"));
+                return MAKE_TOKEN(syntaxerror(tok, "f-string: expressions nested too deeply - %s", "Các biểu thức con lồng vào quá sâu"));
             }
             TOK_GET_MODE(tok)->kind = TOK_REGULAR_MODE;
             return tok_get_normal_mode(tok, current_tok, token);
@@ -2851,9 +2842,7 @@ f_string_middle:
             tok->lineno = the_current_tok->f_string_line_start;
 
             if (current_tok->f_string_quote_size == 3) {
-                syntaxerror(tok,
-                            "unterminated triple-quoted f-string literal"
-                            " (detected at line %d)", start);
+                syntaxerror(tok, "unterminated triple-quoted f-string literal (detected at line %d) - %s %d)", start, "Chuỗi f-string 3 dấu trích dẫn không xác định (tại dòng ", start);
                 if (c != '\n') {
                     tok->done = E_EOFS;
                 }
@@ -2861,8 +2850,7 @@ f_string_middle:
             }
             else {
                 return MAKE_TOKEN(syntaxerror(tok,
-                                    "unterminated f-string literal (detected at"
-                                    " line %d)", start));
+                                    "unterminated f-string literal (detected at line %d) - %s %d)", start, "Chuỗi f-string không xác định (tại dòng", start));
             }
         }
 
@@ -2880,7 +2868,7 @@ f_string_middle:
                 tok_backup(tok, c);
                 current_tok->curly_bracket_expr_start_depth++;
                 if (current_tok->curly_bracket_expr_start_depth >= MAX_EXPR_NESTING) {
-                    return MAKE_TOKEN(syntaxerror(tok, "f-string: expressions nested too deeply"));
+                    return MAKE_TOKEN(syntaxerror(tok, "f-string: expressions nested too deeply - %s", "Các biểu thức con lồng vào quá sâu"));
                 }
                 TOK_GET_MODE(tok)->kind = TOK_REGULAR_MODE;
                 p_start = tok->start;
