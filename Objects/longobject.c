@@ -2777,8 +2777,7 @@ PyLong_FromString(const char *str, char **pend, int base)
         return NULL;
     }
     PyErr_Format(PyExc_ValueError,
-                 "invalid literal for int() with base %d: %.200R",
-                 base, strobj);
+                 "invalid literal for int() with base %d: %.200R - %.200R %s %d", base, strobj, strobj, "là giá trị không hợp lệ cho số nguyên cơ số", base);
     Py_DECREF(strobj);
     return NULL;
 }
@@ -2801,8 +2800,7 @@ _PyLong_FromBytes(const char *s, Py_ssize_t len, int base)
     strobj = PyBytes_FromStringAndSize(s, Py_MIN(len, 200));
     if (strobj != NULL) {
         PyErr_Format(PyExc_ValueError,
-                     "invalid literal for int() with base %d: %.200R",
-                     base, strobj);
+                     "invalid literal for int() with base %d: %.200R - %.200R %s %d", base, strobj, strobj, "là giá trị không hợp lệ cho số nguyên cơ số", base);
         Py_DECREF(strobj);
     }
     return NULL;
@@ -2832,8 +2830,7 @@ PyLong_FromUnicodeObject(PyObject *u, int base)
     Py_DECREF(asciidig);
     Py_XDECREF(result);
     PyErr_Format(PyExc_ValueError,
-                 "invalid literal for int() with base %d: %.200R",
-                 base, u);
+                 "invalid literal for int() with base %d: %.200R - %.200R %s %d", base, u, u, "là giá trị không hợp lệ cho số nguyên cơ số", base);
     return NULL;
 }
 
