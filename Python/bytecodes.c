@@ -1039,7 +1039,7 @@ dummy_func(
             err = PyObject_DelItem(ns, name);
             // Can't use ERROR_IF here.
             if (err != 0) {
-                format_exc_check_arg(tstate, PyExc_NameError,
+                format_name_error(tstate, PyExc_NameError,
                                      NAME_ERROR_MSG,
                                      name);
                 goto error;
@@ -1158,7 +1158,7 @@ dummy_func(
             // Can't use ERROR_IF here.
             if (err != 0) {
                 if (_PyErr_ExceptionMatches(tstate, PyExc_KeyError)) {
-                    format_exc_check_arg(tstate, PyExc_NameError,
+                    format_name_error(tstate, PyExc_NameError,
                                          NAME_ERROR_MSG, name);
                 }
                 goto error;
@@ -1208,7 +1208,7 @@ dummy_func(
                         v = PyDict_GetItemWithError(BUILTINS(), name);
                         if (v == NULL) {
                             if (!_PyErr_Occurred(tstate)) {
-                                format_exc_check_arg(
+                                format_name_error(
                                         tstate, PyExc_NameError,
                                         NAME_ERROR_MSG, name);
                             }
@@ -1220,7 +1220,7 @@ dummy_func(
                         v = PyObject_GetItem(BUILTINS(), name);
                         if (v == NULL) {
                             if (_PyErr_ExceptionMatches(tstate, PyExc_KeyError)) {
-                                format_exc_check_arg(
+                                format_name_error(
                                             tstate, PyExc_NameError,
                                             NAME_ERROR_MSG, name);
                             }
@@ -1271,7 +1271,7 @@ dummy_func(
                         v = PyDict_GetItemWithError(BUILTINS(), name);
                         if (v == NULL) {
                             if (!_PyErr_Occurred(tstate)) {
-                                format_exc_check_arg(
+                                format_name_error(
                                         tstate, PyExc_NameError,
                                         NAME_ERROR_MSG, name);
                             }
@@ -1283,7 +1283,7 @@ dummy_func(
                         v = PyObject_GetItem(BUILTINS(), name);
                         if (v == NULL) {
                             if (_PyErr_ExceptionMatches(tstate, PyExc_KeyError)) {
-                                format_exc_check_arg(
+                                format_name_error(
                                             tstate, PyExc_NameError,
                                             NAME_ERROR_MSG, name);
                             }
@@ -1323,7 +1323,7 @@ dummy_func(
                     if (!_PyErr_Occurred(tstate)) {
                         /* _PyDict_LoadGlobal() returns NULL without raising
                          * an exception if the key doesn't exist */
-                        format_exc_check_arg(tstate, PyExc_NameError,
+                        format_name_error(tstate, PyExc_NameError,
                                              NAME_ERROR_MSG, name);
                     }
                     ERROR_IF(true, error);
@@ -1343,7 +1343,7 @@ dummy_func(
                     v = PyObject_GetItem(BUILTINS(), name);
                     if (v == NULL) {
                         if (_PyErr_ExceptionMatches(tstate, PyExc_KeyError)) {
-                            format_exc_check_arg(
+                            format_name_error(
                                         tstate, PyExc_NameError,
                                         NAME_ERROR_MSG, name);
                         }

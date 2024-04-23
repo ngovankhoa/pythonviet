@@ -205,6 +205,7 @@ static PyObject * import_name(PyThreadState *, _PyInterpreterFrame *,
                               PyObject *, PyObject *, PyObject *);
 static PyObject * import_from(PyThreadState *, PyObject *, PyObject *);
 static void format_exc_check_arg(PyThreadState *, PyObject *, const char *, PyObject *);
+static void format_name_error(PyThreadState *, PyObject *, const char *, PyObject *);
 static void format_exc_unbound(PyThreadState *tstate, PyCodeObject *co, int oparg);
 static int check_args_iterable(PyThreadState *, PyObject *func, PyObject *vararg);
 static int check_except_type_valid(PyThreadState *tstate, PyObject* right);
@@ -2715,6 +2716,35 @@ format_exc_check_arg(PyThreadState *tstate, PyObject *exc,
         return;
 
     _PyErr_Format(tstate, exc, format_str, obj_str);
+
+    if (exc == PyExc_NameError) {
+        // Include the name in the NameError exceptions to offer suggestions later.
+        PyObject *exc = PyErr_GetRaisedException();
+        if (PyErr_GivenExceptionMatches(exc, PyExc_NameError)) {
+            if (((PyNameErrorObject*)exc)->name == NULL) {
+                // We do not care if this fails because we are going to restore the
+                // NameError anyway.
+                (void)PyObject_SetAttr(exc, &_Py_ID(name), obj);
+            }
+        }
+        PyErr_SetRaisedException(exc);
+    }
+}
+
+static void
+format_name_error(PyThreadState *tstate, PyObject *exc,
+                     const char *format_str, PyObject *obj)
+{
+    const char *obj_str;
+
+    if (!obj)
+        return;
+
+    obj_str = PyUnicode_AsUTF8(obj);
+    if (!obj_str)
+        return;
+
+    _PyErr_Format(tstate, exc, format_str, obj_str, obj_str, "chưa được định nghĩa");
 
     if (exc == PyExc_NameError) {
         // Include the name in the NameError exceptions to offer suggestions later.
