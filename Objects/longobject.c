@@ -4296,8 +4296,8 @@ long_true_divide(PyObject *v, PyObject *w)
     b_size = _PyLong_DigitCount(b);
     negate = (_PyLong_IsNegative(a)) != (_PyLong_IsNegative(b));
     if (b_size == 0) {
-        PyErr_SetString(PyExc_ZeroDivisionError,
-                        "division by zero");
+        PyErr_Format(PyExc_ZeroDivisionError, "division by zero - %s", "Không thể chia cho 0");
+        //PyErr_SetString(PyExc_ZeroDivisionError, "division by zero");
         goto error;
     }
     if (a_size == 0)
