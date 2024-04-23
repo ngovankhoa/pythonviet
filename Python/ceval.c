@@ -206,6 +206,8 @@ static PyObject * import_name(PyThreadState *, _PyInterpreterFrame *,
 static PyObject * import_from(PyThreadState *, PyObject *, PyObject *);
 static void format_exc_check_arg(PyThreadState *, PyObject *, const char *, PyObject *);
 static void format_name_error(PyThreadState *, PyObject *, const char *, PyObject *);
+static void format_unbound_local_error(PyThreadState *, PyObject *, const char *, PyObject *);
+static void format_unbound_free_error(PyThreadState *, PyObject *, const char *, PyObject *);
 static void format_exc_unbound(PyThreadState *tstate, PyCodeObject *co, int oparg);
 static int check_args_iterable(PyThreadState *, PyObject *func, PyObject *vararg);
 static int check_except_type_valid(PyThreadState *tstate, PyObject* right);
@@ -224,7 +226,7 @@ static void
 _PyEvalFrameClearAndPop(PyThreadState *tstate, _PyInterpreterFrame *frame);
 
 #define UNBOUNDLOCAL_ERROR_MSG \
-    "cannot access local variable '%s' where it is not associated with a value"
+    "cannot access local variable '%s' where it is not associated with a value - %s '%s' %s"
 #define UNBOUNDFREE_ERROR_MSG \
     "cannot access free variable '%s' where it is not associated with a" \
     " value in enclosing scope"
@@ -905,7 +907,7 @@ handle_eval_breaker:
 
 unbound_local_error:
         {
-            format_exc_check_arg(tstate, PyExc_UnboundLocalError,
+            format_unbound_local_error(tstate, PyExc_UnboundLocalError,
                 UNBOUNDLOCAL_ERROR_MSG,
                 PyTuple_GetItem(frame->f_code->co_localsplusnames, oparg)
             );
@@ -2761,6 +2763,35 @@ format_name_error(PyThreadState *tstate, PyObject *exc,
 }
 
 static void
+format_unbound_local_error(PyThreadState *tstate, PyObject *exc,
+                     const char *format_str, PyObject *obj)
+{
+    const char *obj_str;
+
+    if (!obj)
+        return;
+
+    obj_str = PyUnicode_AsUTF8(obj);
+    if (!obj_str)
+        return;
+
+    _PyErr_Format(tstate, exc, format_str, obj_str, "Không thể truy cập biến địa phương", obj_str, "khi nó chưa được gán giá trị");
+
+    if (exc == PyExc_NameError) {
+        // Include the name in the NameError exceptions to offer suggestions later.
+        PyObject *exc = PyErr_GetRaisedException();
+        if (PyErr_GivenExceptionMatches(exc, PyExc_NameError)) {
+            if (((PyNameErrorObject*)exc)->name == NULL) {
+                // We do not care if this fails because we are going to restore the
+                // NameError anyway.
+                (void)PyObject_SetAttr(exc, &_Py_ID(name), obj);
+            }
+        }
+        PyErr_SetRaisedException(exc);
+    }
+}
+
+static void
 format_exc_unbound(PyThreadState *tstate, PyCodeObject *co, int oparg)
 {
     PyObject *name;
@@ -2769,7 +2800,7 @@ format_exc_unbound(PyThreadState *tstate, PyCodeObject *co, int oparg)
         return;
     name = PyTuple_GET_ITEM(co->co_localsplusnames, oparg);
     if (oparg < PyCode_GetFirstFree(co)) {
-        format_exc_check_arg(tstate, PyExc_UnboundLocalError,
+        format_unbound_local_error(tstate, PyExc_UnboundLocalError,
                              UNBOUNDLOCAL_ERROR_MSG, name);
     } else {
         format_exc_check_arg(tstate, PyExc_NameError,
