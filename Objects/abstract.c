@@ -908,10 +908,11 @@ binop_type_error(PyObject *v, PyObject *w, const char *op_name)
 {
     PyErr_Format(PyExc_TypeError,
                  "unsupported operand type(s) for %.100s: "
-                 "'%.100s' and '%.100s'",
+                 "'%.100s' and '%.100s' - %s '%.100s' %s '%.100s' %s %.100s",
                  op_name,
                  Py_TYPE(v)->tp_name,
-                 Py_TYPE(w)->tp_name);
+                 Py_TYPE(w)->tp_name,
+                 "Không hỗ trợ kiểu", Py_TYPE(v)->tp_name, "và", Py_TYPE(w)->tp_name, "cho toán tử", op_name);
     return NULL;
 }
 
@@ -927,12 +928,12 @@ binary_op(PyObject *v, PyObject *w, const int op_slot, const char *op_name)
             strcmp(((PyCFunctionObject *)v)->m_ml->ml_name, "print") == 0)
         {
             PyErr_Format(PyExc_TypeError,
-                "unsupported operand type(s) for %.100s: "
-                "'%.100s' and '%.100s'. Did you mean \"print(<message>, "
-                "file=<output_stream>)\"?",
+                "unsupported operand type(s) for %.100s: '%.100s' and '%.100s'. Did you mean \"print(<message>, file=<output_stream>)\"? - "
+                "%s '%.100s' %s '%.100s' %s %.100s. %s",
                 op_name,
                 Py_TYPE(v)->tp_name,
-                Py_TYPE(w)->tp_name);
+                Py_TYPE(w)->tp_name,
+                "Không hỗ trợ kiểu", Py_TYPE(v)->tp_name, "và", Py_TYPE(w)->tp_name, "cho toán tử", op_name, "Có phải bạn muốn \"print(<message>, file=<output_stream>)\"?");
             return NULL;
         }
         return binop_type_error(v, w, op_name);
@@ -1021,23 +1022,24 @@ ternary_op(PyObject *v,
     }
 
     if (z == Py_None) {
-        PyErr_Format(
-            PyExc_TypeError,
-            "unsupported operand type(s) for %.100s: "
-            "'%.100s' and '%.100s'",
-            op_name,
-            Py_TYPE(v)->tp_name,
-            Py_TYPE(w)->tp_name);
+        PyErr_Format(PyExc_TypeError,
+                 "unsupported operand type(s) for %.100s: "
+                 "'%.100s' and '%.100s' - %s '%.100s' %s '%.100s' %s %.100s",
+                 op_name,
+                 Py_TYPE(v)->tp_name,
+                 Py_TYPE(w)->tp_name,
+                 "Không hỗ trợ kiểu", Py_TYPE(v)->tp_name, "và", Py_TYPE(w)->tp_name, "cho toán tử", op_name);
     }
     else {
         PyErr_Format(
             PyExc_TypeError,
             "unsupported operand type(s) for %.100s: "
-            "'%.100s', '%.100s', '%.100s'",
+            "'%.100s', '%.100s', '%.100s' - %s '%.100s', '%.100s' %s '%.100s' %s '%.100s'",
             op_name,
             Py_TYPE(v)->tp_name,
             Py_TYPE(w)->tp_name,
-            Py_TYPE(z)->tp_name);
+            Py_TYPE(z)->tp_name,
+            "Không hỗ trợ kiểu", Py_TYPE(v)->tp_name, Py_TYPE(w)->tp_name, "và", Py_TYPE(z)->tp_name, "cho toán tử", op_name);
     }
     return NULL;
 }
