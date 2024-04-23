@@ -802,8 +802,7 @@ tb_displayline(PyTracebackObject* tb, PyObject *f, PyObject *filename, int linen
         return -1;
     }
 
-    PyObject *line = PyUnicode_FromFormat("  File \"%U\", line %d, in %U\n",
-                                          filename, lineno, name);
+    PyObject *line = PyUnicode_FromFormat("  File \"%U\", line (%s) %d, in (trong) %U\n", filename, "dòng", lineno, name);
     if (line == NULL) {
         return -1;
     }
