@@ -179,6 +179,6 @@ def get_matching_oses(missing, filename):
 
 def is_missing_dep(errtext):
     if 'No such file or directory' in errtext:
-        missing = errtext.split(': No such file or directory')[0].split()[-1]
+        missing = errtext.split(': No such file or directory')[0].split()[-1]        
         return missing
     return False

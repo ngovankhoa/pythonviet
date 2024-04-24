@@ -1298,7 +1298,7 @@ def _sanity_check(name, package, level):
         raise ValueError('Empty module name')
 
 
-_ERR_MSG_PREFIX = 'No module named '
+_ERR_MSG_PREFIX = 'No module named (không tìm thấy gói) '
 _ERR_MSG = _ERR_MSG_PREFIX + '{!r}'
 
 def _find_and_load_unlocked(name, import_):
