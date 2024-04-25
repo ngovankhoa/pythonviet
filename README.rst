@@ -19,8 +19,7 @@ các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn t
 
 PythonViet
 -------------------
-![](Docs/_static/pythonviet.png?raw=true)
-![PythonViet](https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png?raw=true)
+![PythonViet](https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png)
 
 See the end of this file for further copyright and license information.
 
