@@ -20,9 +20,7 @@ các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn t
 PythonViet
 -------------------
 ![](Docs/_static/pythonviet.png?raw=true)
-<p align="center">  
-    <img src=".Docs/_static/pythonviet.png" width="100px" alt="PythonViet" />  
-</p>
+![PythonViet](https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png?raw=true)
 
 See the end of this file for further copyright and license information.
 
