@@ -1,20 +1,26 @@
-This is Python version 3.12.3
+PythonViet 3.12.30 - Python 3.12.3 Việt Hóa
 =============================
 
-.. image:: https://github.com/python/cpython/workflows/Tests/badge.svg
-   :alt: CPython build status on GitHub Actions
-   :target: https://github.com/python/cpython/actions
+Bản quyền © 2024 Ngô Văn Khoa. All rights reserved.
+Bản quyền © 2001-2024 Python Software Foundation.  All rights reserved.
 
-.. image:: https://dev.azure.com/python/cpython/_apis/build/status/Azure%20Pipelines%20CI?branchName=main
-   :alt: CPython build status on Azure DevOps
-   :target: https://dev.azure.com/python/cpython/_build/latest?definitionId=4&branchName=main
+Giới thiệu
+-------------------
+Python là một trong những ngôn ngữ lập trình phổ biến nhất thế giới (top 2 - thống kê 2024).
+Python rất dễ sử dụng và được dạy trong hầu hết các trường phổ thông trên thế giới. Gần đây, Python
+cũng đã được đưa vào dạy cho học sinh ở Việt Nam.
 
-.. image:: https://img.shields.io/badge/discourse-join_chat-brightgreen.svg
-   :alt: Python Discourse chat
-   :target: https://discuss.python.org/
+Đối với người mới học lập trình, việc viết sai cú pháp là điều không thể tránh khỏi. Khi sai cú pháp,
+Python sẽ thông báo bạn đã sai điều gì. Tuy nhiên, không phải ai cũng giỏi tiếng Anh, và ngay cả nếu bạn
+giỏi tiếng Anh, thì các thuật ngữ tiếng Anh chuyên ngành công nghệ thông tin cũng gây khó khăn cho bạn.
 
+Nhận thấy điều này, nên tôi đã tạo ra một phiên bản chỉnh sửa của Python, gọi là PythonViet, nhằm giúp
+các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn trong việc học lập trình Python.
 
-Copyright © 2001-2024 Python Software Foundation.  All rights reserved.
+PythonViet
+-------------------
+![](Docs/_static/pythonviet.png?raw=true)
+
 
 See the end of this file for further copyright and license information.
 
