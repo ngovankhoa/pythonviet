@@ -1,6 +1,10 @@
 PythonViet 3.12.30 - Python 3.12.3 Việt Hóa
 =============================
 
+.. image:: https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png
+   :alt: PythonViet
+
+
 Bản quyền © 2024 Ngô Văn Khoa. All rights reserved.
 Bản quyền © 2001-2024 Python Software Foundation.  All rights reserved.
 
@@ -19,7 +23,7 @@ các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn t
 
 PythonViet
 -------------------
-![PythonViet](https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png)
+
 
 See the end of this file for further copyright and license information.
 
