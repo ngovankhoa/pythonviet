@@ -1,5 +1,5 @@
 PythonViet 3.12.30 là bản Việt Hóa từ Python 3.12.3
-=====
+===================================================
 
 .. image:: https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png
    :alt: PythonViet
