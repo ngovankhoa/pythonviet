@@ -5472,8 +5472,7 @@ _PyObject_StoreInstanceAttribute(PyObject *obj, PyDictValues *values,
     if (old_value == NULL) {
         if (value == NULL) {
             PyErr_Format(PyExc_AttributeError,
-                         "'%.100s' object has no attribute '%U'",
-                         Py_TYPE(obj)->tp_name, name);
+                         "'%.100s' object has no attribute '%U' - %s '%.100s' %s '%U'", Py_TYPE(obj)->tp_name, name, "Đối tượng", Py_TYPE(obj)->tp_name, "không có thuộc tính", name);
             return -1;
         }
         _PyDictValues_AddToInsertionOrder(values, ix);

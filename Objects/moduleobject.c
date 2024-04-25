@@ -839,8 +839,7 @@ _Py_module_getattro_impl(PyModuleObject *m, PyObject *name, int suppress)
             }
             else {
                 PyErr_Format(PyExc_AttributeError,
-                                "module '%U' has no attribute '%U'",
-                                mod_name, name);
+                                "module '%U' has no attribute '%U' - %s '%U' %s '%U'", mod_name, name, "Gói", mod_name, "không có thuộc tính", name);
             }
             Py_XDECREF(spec);
         }
@@ -852,7 +851,7 @@ _Py_module_getattro_impl(PyModuleObject *m, PyObject *name, int suppress)
     }
     if (suppress != 1) {
         PyErr_Format(PyExc_AttributeError,
-                    "module has no attribute '%U'", name);
+                    "module has no attribute '%U' - %s '%U'", name, "Gói không có thuộc tính", name);
     }
     return NULL;
 }

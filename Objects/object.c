@@ -1052,8 +1052,7 @@ PyObject_GetAttr(PyObject *v, PyObject *name)
     }
     else {
         PyErr_Format(PyExc_AttributeError,
-                    "'%.100s' object has no attribute '%U'",
-                    tp->tp_name, name);
+                    "'%.100s' object has no attribute '%U' - %s '%.100s' %s '%U'", tp->tp_name, name, "Đối tượng", tp->tp_name, "không có thuộc tính", name);
     }
 
     if (result == NULL) {
@@ -1383,8 +1382,7 @@ _PyObject_GetMethod(PyObject *obj, PyObject *name, PyObject **method)
     }
 
     PyErr_Format(PyExc_AttributeError,
-                 "'%.100s' object has no attribute '%U'",
-                 tp->tp_name, name);
+                 "'%.100s' object has no attribute '%U' - %s '%.100s' %s '%U'", tp->tp_name, name, "Đối tượng", tp->tp_name, "không có thuộc tính", name);
 
     set_attribute_error_context(obj, name);
     return 0;
@@ -1504,8 +1502,7 @@ _PyObject_GenericGetAttrWithDict(PyObject *obj, PyObject *name,
 
     if (!suppress) {
         PyErr_Format(PyExc_AttributeError,
-                     "'%.100s' object has no attribute '%U'",
-                     tp->tp_name, name);
+                     "'%.100s' object has no attribute '%U' - %s '%.100s' %s '%U'", tp->tp_name, name, "Đối tượng", tp->tp_name, "không có thuộc tính", name);
 
         set_attribute_error_context(obj, name);
     }
@@ -1571,8 +1568,7 @@ _PyObject_GenericSetAttrWithDict(PyObject *obj, PyObject *name,
         if (dictptr == NULL) {
             if (descr == NULL) {
                 PyErr_Format(PyExc_AttributeError,
-                            "'%.100s' object has no attribute '%U'",
-                            tp->tp_name, name);
+                            "'%.100s' object has no attribute '%U' - %s '%.100s' %s '%U'", tp->tp_name, name, "Đối tượng", tp->tp_name, "không có thuộc tính", name);
             }
             else {
                 PyErr_Format(PyExc_AttributeError,
@@ -1597,13 +1593,13 @@ _PyObject_GenericSetAttrWithDict(PyObject *obj, PyObject *name,
     if (res < 0 && PyErr_ExceptionMatches(PyExc_KeyError)) {
         if (PyType_IsSubtype(tp, &PyType_Type)) {
             PyErr_Format(PyExc_AttributeError,
-                         "type object '%.50s' has no attribute '%U'",
-                         ((PyTypeObject*)obj)->tp_name, name);
+                         "type object '%.50s' has no attribute '%U' - %s '%.50s' %s '%U'",
+                         ((PyTypeObject*)obj)->tp_name, name, "Đối tượng kiểu", ((PyTypeObject*)obj)->tp_name, "không có thuộc tính", name);
         }
         else {
             PyErr_Format(PyExc_AttributeError,
-                         "'%.100s' object has no attribute '%U'",
-                         tp->tp_name, name);
+                         "'%.100s' object has no attribute '%U' - %s '%.100s' %s '%U'",
+                         tp->tp_name, name, "Đối tượng", tp->tp_name, "không có thuộc tính", name);
         }
     }
   done:

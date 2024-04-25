@@ -81,8 +81,8 @@ PyMember_GetOne(const char *obj_addr, PyMemberDef *l)
             PyObject *obj = (PyObject *)obj_addr;
             PyTypeObject *tp = Py_TYPE(obj);
             PyErr_Format(PyExc_AttributeError,
-                         "'%.200s' object has no attribute '%s'",
-                         tp->tp_name, l->name);
+                         "'%.200s' object has no attribute '%s' - %s '%.200s' %s %s",
+                         tp->tp_name, l->name, "Đối tượng", tp->tp_name, "không có thuộc tính", l->name);
         }
         Py_XINCREF(v);
         break;

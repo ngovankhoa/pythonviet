@@ -1444,7 +1444,7 @@ static PyObject *
 type_get_annotations(PyTypeObject *type, void *context)
 {
     if (!(type->tp_flags & Py_TPFLAGS_HEAPTYPE)) {
-        PyErr_Format(PyExc_AttributeError, "type object '%s' has no attribute '__annotations__'", type->tp_name);
+        PyErr_Format(PyExc_AttributeError, "type object '%s' has no attribute '__annotations__' - %s '%s' %s '__annotations__'", type->tp_name, "Đối tượng kiểu", type->tp_name, "không có thuộc tính");
         return NULL;
     }
 
@@ -4873,8 +4873,8 @@ _Py_type_getattro_impl(PyTypeObject *type, PyObject *name, int * suppress_missin
     /* Give up */
     if (suppress_missing_attribute == NULL) {
         PyErr_Format(PyExc_AttributeError,
-                        "type object '%.100s' has no attribute '%U'",
-                        type->tp_name, name);
+                        "type object '%.100s' has no attribute '%U' - %s '%.100s' %s '%U'",
+                        type->tp_name, name, "Đối tượng kiểu", type->tp_name, "không có thuộc tính", name);
     } else {
         // signal the caller we have not set an PyExc_AttributeError and gave up
         *suppress_missing_attribute = 1;
