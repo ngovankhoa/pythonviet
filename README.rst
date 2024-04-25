@@ -1,16 +1,15 @@
-PythonViet 3.12.30 là bản Việt Hóa từ Python 3.12.3
+PythonViet 3.12.30 - bản Việt hóa của Python 3.12.3
 ===================================================
 
 .. image:: https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png
    :alt: PythonViet
+   :align: center
 
-
-Bản quyền © 2024 Ngô Văn Khoa. All rights reserved.
-
-Bản quyền © 2001-2024 Python Software Foundation.  All rights reserved.
+| Bản quyền © 2024 Ngô Văn Khoa. All rights reserved.
+| Bản quyền © 2001-2024 Python Software Foundation.  All rights reserved.
 
 Giới thiệu
--------------------
+----------
 Python là một trong những ngôn ngữ lập trình phổ biến nhất thế giới (top 2 - thống kê 2024).
 Python rất dễ sử dụng và được dạy trong hầu hết các trường phổ thông trên thế giới. Gần đây, Python
 cũng đã được đưa vào dạy cho học sinh ở Việt Nam.
@@ -23,7 +22,7 @@ Nhận thấy điều này, nên tôi đã tạo ra một phiên bản chỉnh s
 các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn trong việc học lập trình Python.
 
 PythonViet
--------------------
+----------
 
 
 See the end of this file for further copyright and license information.
