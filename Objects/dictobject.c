@@ -1998,7 +1998,8 @@ _PyDict_DelItem_KnownHash(PyObject *op, PyObject *key, Py_hash_t hash)
     if (ix == DKIX_ERROR)
         return -1;
     if (ix == DKIX_EMPTY || old_value == NULL) {
-        _PyErr_SetKeyError(key);
+        //_PyErr_SetKeyError(key);        
+        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
         return -1;
     }
 
@@ -2035,7 +2036,8 @@ _PyDict_DelItemIf(PyObject *op, PyObject *key,
     if (ix == DKIX_ERROR)
         return -1;
     if (ix == DKIX_EMPTY || old_value == NULL) {
-        _PyErr_SetKeyError(key);
+        //_PyErr_SetKeyError(key);
+        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
         return -1;
     }
 
@@ -2205,7 +2207,8 @@ _PyDict_Pop_KnownHash(PyObject *dict, PyObject *key, Py_hash_t hash, PyObject *d
         if (deflt) {
             return Py_NewRef(deflt);
         }
-        _PyErr_SetKeyError(key);
+        //_PyErr_SetKeyError(key);
+        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
         return NULL;
     }
     ix = _Py_dict_lookup(mp, key, hash, &old_value);
@@ -2215,7 +2218,8 @@ _PyDict_Pop_KnownHash(PyObject *dict, PyObject *key, Py_hash_t hash, PyObject *d
         if (deflt) {
             return Py_NewRef(deflt);
         }
-        _PyErr_SetKeyError(key);
+        //_PyErr_SetKeyError(key);
+        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
         return NULL;
     }
     assert(old_value != NULL);
@@ -2236,7 +2240,8 @@ _PyDict_Pop(PyObject *dict, PyObject *key, PyObject *deflt)
         if (deflt) {
             return Py_NewRef(deflt);
         }
-        _PyErr_SetKeyError(key);
+        //_PyErr_SetKeyError(key);
+        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
         return NULL;
     }
     if (!PyUnicode_CheckExact(key) || (hash = unicode_get_hash(key)) == -1) {
@@ -2510,7 +2515,8 @@ dict_subscript(PyDictObject *mp, PyObject *key)
             else if (PyErr_Occurred())
                 return NULL;
         }
-        _PyErr_SetKeyError(key);
+        //_PyErr_SetKeyError(key);                
+        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
         return NULL;
     }
     return Py_NewRef(value);
@@ -2898,7 +2904,8 @@ dict_merge(PyInterpreterState *interp, PyObject *a, PyObject *b, int override)
                 }
                 else if (err > 0) {
                     if (override != 0) {
-                        _PyErr_SetKeyError(key);
+                        //_PyErr_SetKeyError(key);
+                        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
                         Py_DECREF(value);
                         Py_DECREF(key);
                         return -1;
@@ -2947,7 +2954,8 @@ dict_merge(PyInterpreterState *interp, PyObject *a, PyObject *b, int override)
                             Py_DECREF(key);
                             continue;
                         }
-                        _PyErr_SetKeyError(key);
+                        //_PyErr_SetKeyError(key);
+                        PyErr_Format(PyExc_KeyError, "%U - %s", PyObject_Str(key), "Không tìm thấy khóa này");
                     }
                     Py_DECREF(key);
                     Py_DECREF(iter);
