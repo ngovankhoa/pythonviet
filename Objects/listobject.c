@@ -248,8 +248,9 @@ PyList_GetItem(PyObject *op, Py_ssize_t i)
         return NULL;
     }
     if (!valid_index(i, Py_SIZE(op))) {
-        _Py_DECLARE_STR(list_err, "list index out of range");
-        PyErr_SetObject(PyExc_IndexError, &_Py_STR(list_err));
+        //_Py_DECLARE_STR(list_err, "list index out of range");
+        //PyErr_SetObject(PyExc_IndexError, &_Py_STR(list_err));
+        PyErr_Format(PyExc_IndexError, "list index out of range - %s", "Số chỉ mục danh sách không đúng");
         return NULL;
     }
     return ((PyListObject *)op) -> ob_item[i];
@@ -457,7 +458,8 @@ static PyObject *
 list_item(PyListObject *a, Py_ssize_t i)
 {
     if (!valid_index(i, Py_SIZE(a))) {
-        PyErr_SetObject(PyExc_IndexError, &_Py_STR(list_err));
+        //PyErr_SetObject(PyExc_IndexError, &_Py_STR(list_err));
+        PyErr_Format(PyExc_IndexError, "list index out of range - %s", "Số chỉ mục danh sách không đúng");
         return NULL;
     }
     return Py_NewRef(a->ob_item[i]);
