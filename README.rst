@@ -1,4 +1,4 @@
-PythonViet 3.12.30 - Python 3.12.3 Việt Hóa
+PythonViet 3.12.30 là bản Việt Hóa từ Python 3.12.3
 =============================
 
 .. image:: https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png
@@ -6,6 +6,7 @@ PythonViet 3.12.30 - Python 3.12.3 Việt Hóa
 
 
 Bản quyền © 2024 Ngô Văn Khoa. All rights reserved.
+
 Bản quyền © 2001-2024 Python Software Foundation.  All rights reserved.
 
 Giới thiệu
