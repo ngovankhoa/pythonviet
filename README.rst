@@ -21,8 +21,7 @@ các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn t
 Việt hóa
 --------
 
-Cú pháp là các quy tắc của ngôn ngữ lập trình, tương tự như chính tả và ngữ pháp trong ngôn ngữ tự nhiên. 
-Các lỗi cú pháp là các lỗi thường xuyên gặp nhất cho người mới học lập trình. PythonViet Việt hóa tất 
+Cú pháp là các quy tắc của ngôn ngữ lập trình, tương tự như chính tả và ngữ pháp trong ngôn ngữ tự nhiên. PythonViet Việt hóa tất 
 cả các lỗi cú pháp.
 
 PythonViet cũng Việt hóa các lỗi thông dụng nhất mà người lập trình hay gặp phải trong Python, bao gồm 10 lỗi sau:
@@ -35,16 +34,11 @@ Bản cài đặt cũng được Việt hóa hoàn toàn nhằm giúp người m
 Thông tin bản quyền và giấy phép
 --------------------------------
 
-Copyright © 2024 Ngo Van Khoa.  All rights reserved.
-
-Copyright © 2001-2024 Python Software Foundation.  All rights reserved.
-
-Copyright © 2000 BeOpen.com.  All rights reserved.
-
-Copyright © 1995-2001 Corporation for National Research Initiatives.  All
-rights reserved.
-
-Copyright © 1991-1995 Stichting Mathematisch Centrum.  All rights reserved.
+| Copyright © 2024 Ngo Van Khoa.  All rights reserved.
+| Copyright © 2001-2024 Python Software Foundation.  All rights reserved.
+| Copyright © 2000 BeOpen.com.  All rights reserved.
+| Copyright © 1995-2001 Corporation for National Research Initiatives. All rights reserved.
+| Copyright © 1991-1995 Stichting Mathematisch Centrum.  All rights reserved.
 
 See the `LICENSE <https://github.com/ngovankhoa/pythonviet/blob/main/LICENSE>`_ for
 information on the history of this software, terms & conditions for usage, and a
