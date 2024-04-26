@@ -1,6 +1,6 @@
 # PythonViet 3.12.30 - bản Việt hóa của Python 3.12.3
 
-![PythonViet](Doc/_static/pythonviet.png)
+![PythonViet](https://raw.githubusercontent.com/ngovankhoa/pythonviet/main/Doc/_static/pythonviet.png)
 
 ## Giới thiệu
 
