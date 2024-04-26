@@ -1,12 +1,9 @@
-PythonViet 3.12.30 - bản Việt hóa của Python 3.12.3
-===================================================
+# PythonViet 3.12.30 - bản Việt hóa của Python 3.12.3
 
-.. image:: https://github.com/ngovankhoa/pythonviet/blob/main/Doc/_static/pythonviet.png
-   :alt: PythonViet
-   :align: center
+![PythonViet](Doc/_static/pythonviet.png)
 
-Giới thiệu
-----------
+## Giới thiệu
+
 Python là một trong những ngôn ngữ lập trình phổ biến nhất thế giới (top 2 - thống kê 2024).
 Python rất dễ sử dụng và được dạy trong hầu hết các trường phổ thông trên thế giới. Gần đây, Python
 cũng đã được đưa vào dạy cho học sinh ở Việt Nam.
@@ -18,8 +15,7 @@ giỏi tiếng Anh, thì các thuật ngữ tiếng Anh chuyên ngành công ngh
 Nhận thấy điều này, nên tôi đã tạo ra một phiên bản chỉnh sửa của Python, gọi là PythonViet, nhằm giúp
 các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn trong việc học lập trình Python.
 
-Việt hóa
---------
+## Việt hóa
 
 Cú pháp là các quy tắc của ngôn ngữ lập trình, tương tự như chính tả và ngữ pháp trong ngôn ngữ tự nhiên. PythonViet Việt hóa tất 
 cả các lỗi cú pháp.
@@ -30,15 +26,21 @@ IndexError, KeyError, AttributeError.
 
 Bản cài đặt cũng được Việt hóa hoàn toàn nhằm giúp người mới làm quen Python dễ dàng tùy chỉnh các thiết lập cài đặt Python.
 
+## Download
 
-Thông tin bản quyền và giấy phép
---------------------------------
+### Windows 64 bit
 
-| Copyright © 2024 Ngo Van Khoa.  All rights reserved.
-| Copyright © 2001-2024 Python Software Foundation.  All rights reserved.
-| Copyright © 2000 BeOpen.com.  All rights reserved.
-| Copyright © 1995-2001 Corporation for National Research Initiatives. All rights reserved.
-| Copyright © 1991-1995 Stichting Mathematisch Centrum.  All rights reserved.
+
+
+### Windows 32 bit
+
+## Thông tin bản quyền và giấy phép
+
+Copyright © 2024 Ngo Van Khoa.  All rights reserved.\
+Copyright © 2001-2024 Python Software Foundation.  All rights reserved.\
+Copyright © 2000 BeOpen.com.  All rights reserved.\
+Copyright © 1995-2001 Corporation for National Research Initiatives. All rights reserved.\
+Copyright © 1991-1995 Stichting Mathematisch Centrum.  All rights reserved.
 
 See the `LICENSE <https://github.com/ngovankhoa/pythonviet/blob/main/LICENSE>`_ for
 information on the history of this software, terms & conditions for usage, and a
