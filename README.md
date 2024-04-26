@@ -28,11 +28,11 @@ Bản cài đặt cũng được Việt hóa hoàn toàn nhằm giúp người m
 
 ## Download
 
-### Windows 64 bit
+File setup cho Windows 64 bit: 
+[pythonviet-3.12.30-amd64.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15133337/pythonviet-3.12.30-amd64.exe.zip)
 
-
-
-### Windows 32 bit
+File setup cho Windows 32 bit: 
+[pythonviet-3.12.30-win32.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15133367/pythonviet-3.12.30-win32.exe.zip)
 
 ## Thông tin bản quyền và giấy phép
 
