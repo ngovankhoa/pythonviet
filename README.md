@@ -42,7 +42,7 @@ Copyright © 2000 BeOpen.com.  All rights reserved.\
 Copyright © 1995-2001 Corporation for National Research Initiatives. All rights reserved.\
 Copyright © 1991-1995 Stichting Mathematisch Centrum.  All rights reserved.
 
-See the `LICENSE <https://github.com/ngovankhoa/pythonviet/blob/main/LICENSE>`_ for
+See the [LICENSE](https://github.com/ngovankhoa/pythonviet/blob/main/LICENSE) for
 information on the history of this software, terms & conditions for usage, and a
 DISCLAIMER OF ALL WARRANTIES.
 
