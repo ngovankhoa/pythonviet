@@ -18,14 +18,18 @@ giỏi tiếng Anh, thì các thuật ngữ tiếng Anh chuyên ngành công ngh
 Nhận thấy điều này, nên tôi đã tạo ra một phiên bản chỉnh sửa của Python, gọi là PythonViet, nhằm giúp
 các bạn mới học Python, và cũng để giúp con tôi, dễ dàng hơn trong việc học lập trình Python.
 
-Danh sách các lỗi Việt hóa
---------------------------
+Việt hóa
+--------
 
-Lỗi cú pháp
-===========
+Cú pháp là các quy tắc của ngôn ngữ lập trình, tương tự như chính tả và ngữ pháp trong ngôn ngữ tự nhiên. 
+Các lỗi cú pháp là các lỗi thường xuyên gặp nhất cho người mới học lập trình. PythonViet Việt hóa tất 
+cả các lỗi cú pháp.
 
-Các lỗi cú pháp là các lỗi thường xuyên gặp nhất cho người mới học lập trình. PythonViet việt hóa tất 
-cả các lỗi cú pháp. 
+PythonViet cũng Việt hóa các lỗi thông dụng nhất mà người lập trình hay gặp phải trong Python, bao gồm 10 lỗi sau:
+IndentationError, NameError, ValueError, UnboundLocalError, TypeError, ZeroDivisionError, ModuleNotFoundError,
+IndexError, KeyError, AttributeError.
+
+Bản cài đặt cũng được Việt hóa hoàn toàn nhằm giúp người mới làm quen Python dễ dàng tùy chỉnh các thiết lập cài đặt Python.
 
 
 Thông tin bản quyền và giấy phép
@@ -42,7 +46,7 @@ rights reserved.
 
 Copyright © 1991-1995 Stichting Mathematisch Centrum.  All rights reserved.
 
-See the `LICENSE <https://github.com/python/cpython/blob/main/LICENSE>`_ for
+See the `LICENSE <https://github.com/ngovankhoa/pythonviet/blob/main/LICENSE>`_ for
 information on the history of this software, terms & conditions for usage, and a
 DISCLAIMER OF ALL WARRANTIES.
 
