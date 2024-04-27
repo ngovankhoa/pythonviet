@@ -1,4 +1,4 @@
-# PythonViet 3.12.30 - bản Việt hóa của Python 3.12.3
+# PythonViet - Python với các thông báo lỗi bằng tiếng Việt
 
 ![PythonViet](https://raw.githubusercontent.com/ngovankhoa/pythonviet/main/Doc/_static/pythonviet.png)
 
@@ -33,6 +33,8 @@ Bản cài đặt cũng được Việt hóa hoàn toàn nhằm giúp người m
 ![Trình cài đặt PythonViet](https://raw.githubusercontent.com/ngovankhoa/pythonviet/main/Doc/_static/pythonviet-setup.png)
 
 ## Download
+
+#### PythonViet 3.12.30 dựa trên Python 3.12.3.
 
 File cài đặt PythonViet cho Windows 64 bit: 
 [pythonviet-3.12.30-amd64.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15137482/pythonviet-3.12.30-amd64.exe.zip)
