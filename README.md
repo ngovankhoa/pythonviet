@@ -35,10 +35,10 @@ Bản cài đặt cũng được Việt hóa hoàn toàn nhằm giúp người m
 ## Download
 
 File cài đặt PythonViet cho Windows 64 bit: 
-[pythonviet-3.12.30-amd64.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15133337/pythonviet-3.12.30-amd64.exe.zip)
+[pythonviet-3.12.30-amd64.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15137482/pythonviet-3.12.30-amd64.exe.zip)
 
 File cài đặt PythonViet cho Windows 32 bit: 
-[pythonviet-3.12.30-win32.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15133367/pythonviet-3.12.30-win32.exe.zip)
+[pythonviet-3.12.30-win32.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15137485/pythonviet-3.12.30-win32.exe.zip)
 
 ## Thông tin bản quyền và giấy phép
 
