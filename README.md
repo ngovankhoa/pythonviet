@@ -24,14 +24,20 @@ PythonViet cũng Việt hóa các lỗi thông dụng nhất mà người lập 
 IndentationError, NameError, ValueError, UnboundLocalError, TypeError, ZeroDivisionError, ModuleNotFoundError,
 IndexError, KeyError, AttributeError.
 
+Các thông tin lỗi được Việt hóa ngay mức ngôn ngữ, nên bạn có thể dùng PythonViet với bất kỳ IDE nào.
+
+![PythonViet IDE](https://raw.githubusercontent.com/ngovankhoa/pythonviet/main/Doc/_static/pythonviet-ide.png)
+
 Bản cài đặt cũng được Việt hóa hoàn toàn nhằm giúp người mới làm quen Python dễ dàng tùy chỉnh các thiết lập cài đặt Python.
+
+![Trình cài đặt PythonViet](https://raw.githubusercontent.com/ngovankhoa/pythonviet/main/Doc/_static/pythonviet-setup.png)
 
 ## Download
 
-File setup cho Windows 64 bit: 
+File cài đặt PythonViet cho Windows 64 bit: 
 [pythonviet-3.12.30-amd64.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15133337/pythonviet-3.12.30-amd64.exe.zip)
 
-File setup cho Windows 32 bit: 
+File cài đặt PythonViet cho Windows 32 bit: 
 [pythonviet-3.12.30-win32.exe.zip](https://github.com/ngovankhoa/pythonviet/files/15133367/pythonviet-3.12.30-win32.exe.zip)
 
 ## Thông tin bản quyền và giấy phép
